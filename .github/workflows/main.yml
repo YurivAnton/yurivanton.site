@@ -20,4 +20,4 @@ jobs:
             password: ${{ secrets.FTP_PASSWORD }}
             rm: true
             source: "./*"
-            target: "yurivanton.site/web/yurivanton.site/"
+            target: "yurivanton.site/web/"
