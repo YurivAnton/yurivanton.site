@@ -1,27 +1,21 @@
+name: Deploy to Hosting
 on:
   push:
     branches:
-      - main
-jobs:
+      - master
 
+jobs:
   deploy:
-    name: Deploy
     runs-on: ubuntu-latest
+
     steps:
-      - name: SSH Deploy
-        uses: appleboy/ssh-action@master
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Deploy to Hosting
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: | 
-            cd /var/www/yurivanton.site
-            php artisan down
-            git pull
-            composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-            php artisan migrate --force
-            npm run production
-            php artisan optimize:clear
-            php artisan optimize
-            php artisan queue:restart
-            php artisan up
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /yurivanton/web/
