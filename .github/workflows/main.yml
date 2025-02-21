@@ -16,8 +16,8 @@ jobs:
         uses: appleboy/scp-action@master
         with:
             host: 37.9.175.197
-            username: ${{ secrets.FTP_USERNAME }}
-            password: ${{ secrets.FTP_PASSWORD }}
+            username: anton.yurivanton.site
+            password: AntonYuriv1!
             rm: true
             source: "./*"
             target: "yurivanton.site/web/"
