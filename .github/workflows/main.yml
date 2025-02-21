@@ -15,10 +15,10 @@ jobs:
       - name: copy files to server     
         uses: appleboy/scp-action@master
         with:
-            host: sftp://${{ secrets.FTP_HOST }}
+            host: ${{ secrets.FTP_HOST }}
             username: ${{ secrets.FTP_USERNAME }}
             password: ${{ secrets.FTP_PASSWORD }}
-            port: 29947
+            port: 22
             rm: true
             source: "./*"
             target: "yurivanton.site/web/"
