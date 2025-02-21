@@ -25,3 +25,4 @@ jobs:
             php artisan optimize
             php artisan queue:restart
             php artisan up
+          
