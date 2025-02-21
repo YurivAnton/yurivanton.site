@@ -18,6 +18,7 @@ jobs:
             host: sftp://${{ secrets.FTP_HOST }}
             username: ${{ secrets.FTP_USERNAME }}
             password: ${{ secrets.FTP_PASSWORD }}
+            port: 29947
             rm: true
             source: "./*"
             target: "yurivanton.site/web/"
