@@ -18,4 +18,5 @@ jobs:
           ftp-server: ${{ secrets.FTP_SERVER }}
           ftp-username: ${{ secrets.FTP_USERNAME }}
           ftp-password: ${{ secrets.FTP_PASSWORD }}
-          ftp-server-dir: yurivanton.site/web/yurivanton.site/
+          server-dir: yurivanton.site/web/yurivanton.site/
+          git-ftp-args: --insecure
