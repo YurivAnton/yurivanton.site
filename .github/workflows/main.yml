@@ -3,25 +3,16 @@ on:
     branches:
       - main
 jobs:
-
-  deploy:
-    name: Deploy
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: SSH Deploy
-        uses: appleboy/ssh-action@master
+      - uses: actions/checkout@v4
+      - name: rsync deploy
+        uses: burnett01/rsync-deployments@7.0.2
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: | 
-            cd /var/www/yurivanton.site
-            php artisan down
-            git pull
-            composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-            php artisan migrate --force
-            npm run production
-            php artisan optimize:clear
-            php artisan optimize
-            php artisan queue:restart
-            php artisan up
+          switches: -avzr --delete
+          path: .
+          remote_host: ${{ secrets.REMOTE_HOST }}
+          remote_user: ${{ secrets.REMOTE_USER }}
+          remote_key: ${{ secrets.REMOTE_KEY }}
+          
