@@ -13,11 +13,9 @@ jobs:
         uses: actions/checkout@master
         
       - name: copy files to server     
-        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
             server: yurivanton.site
             username: anton.yurivanton.site
             password: AntonYuriv1!
-            port: 21
-            local-dir: "./"
-            server-dir: "/yurivanton.site/web/yurivanton.site/"
+            protocol: ftps
