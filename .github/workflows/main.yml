@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@master
         
       - name: copy files to server     
-        uses: appleboy/scp-action@master
+        uses: appleboy/FTP-Deploy-Action@master
         with:
             server: yurivanton.site
             username: anton.yurivanton.site
