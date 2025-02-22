@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@master
         
       - name: copy files to server     
-        uses: appleboy/FTP-Deploy-Action@4.0.0
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
             server: yurivanton.site
             username: anton.yurivanton.site
