@@ -13,8 +13,8 @@ jobs:
         uses: actions/checkout@master
         
       - name: copy files to server     
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-            server: yurivanton.site
-            username: anton.yurivanton.site
-            password: AntonYuriv1!
+        uses: SamKirkland/FTP-Deploy-Action@2.0.0        
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
