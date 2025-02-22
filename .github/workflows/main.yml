@@ -18,5 +18,6 @@ jobs:
             host: yurivanton.site
             username: anton.yurivanton.site
             password: AntonYuriv1!
+            port: 22
             source: "./*"
             target: "/yurivanton.site/web/yurivanton.site"
