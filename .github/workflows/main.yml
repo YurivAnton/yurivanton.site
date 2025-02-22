@@ -19,4 +19,4 @@ jobs:
             username: anton.yurivanton.site
             password: AntonYuriv1!
             source: "./*"
-            
+            target: "/yurivanton.site/web/yurivanton.site"
