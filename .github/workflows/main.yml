@@ -20,4 +20,4 @@ jobs:
             password: AntonYuriv1!
             port: 22
             source: "./*"
-            target: "/yurivanton.site/web/yurivanton.site"
+            server-dir: "/yurivanton.site/web/yurivanton.site"
