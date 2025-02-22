@@ -18,6 +18,6 @@ jobs:
             server: yurivanton.site
             username: anton.yurivanton.site
             password: AntonYuriv1!
-            port: 22
+            port: 21
             local-dir: "./"
             server-dir: "/yurivanton.site/web/yurivanton.site/"
