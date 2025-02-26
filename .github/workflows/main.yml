@@ -12,7 +12,6 @@ jobs:
       with:
         host: shell.r6.websupport.sk
         username: uid5485023
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 29743
         sctipt: |
           mkdir ~/yurivanton.site/web/test
