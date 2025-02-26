@@ -12,6 +12,7 @@ jobs:
       with:
         host: shell.r6.websupport.sk
         username: uid5485023
+        key: bc95e5d8c9
         port: 29743
         sctipt: |
           mkdir ~/yurivanton.site/web/test
