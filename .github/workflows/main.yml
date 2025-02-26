@@ -15,4 +15,4 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 29743
         sctipt: |
-          mkdir ~/yurivanton.site/test
+          mkdir ~/yurivanton.site/web/test
