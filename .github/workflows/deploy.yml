@@ -16,6 +16,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 25651
           script: | 
+            cd ~/yurivanton.site/web/
             php artisan down
             git pull
             composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
