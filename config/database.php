@@ -45,11 +45,11 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST', 'mysql80.r6.websupport.sk'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'laravel'),
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', ''),
+            'database' => env('DB_DATABASE', 'yurivantonLaravel'),
+            'username' => env('DB_USERNAME', 'AntonDB'),
+            'password' => env('DB_PASSWORD', "d{x<Q#KO~C3W(dqKb0Ww"),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => env('DB_CHARSET', 'utf8mb4'),
             'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
@@ -60,6 +60,14 @@ return [
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
+            'modes'  => [
+            	'ONLY_FULL_GROUP_BY',
+            	'STRICT_TRANS_TABLES',
+            	'NO_ZERO_IN_DATE',
+            	'NO_ZERO_DATE',
+            	'ERROR_FOR_DIVISION_BY_ZERO',
+            	'NO_ENGINE_SUBSTITUTION',
+             ],
         ],
 
         'mariadb' => [
