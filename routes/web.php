@@ -7,5 +7,5 @@ Route::get('/', function () {
 });
 
 Route::get('/test1', function () {
-    return 'test!!!!! huuuuurrraaaaaa';
+    return 'test!!!!! huuuuurrraaaaaa!!!!';
 });
