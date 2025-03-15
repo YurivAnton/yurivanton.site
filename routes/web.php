@@ -8,7 +8,7 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function(){
-    return '!!! test  !!!';
+    return view('test');
 });
 
 Route::get('/dashboard', function () {
