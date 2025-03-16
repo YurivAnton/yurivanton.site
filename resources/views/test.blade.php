@@ -9,13 +9,13 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
-        <link rel="stylesheet" href="{{ URL::asset('css/style.css'); }}">
+        <link rel="stylesheet" href="{{ asset('css/app.css'); }}">
 
         <!-- Styles / Scripts -->
         
 
-            <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-            <script src="{{ asset('js/app.js') }}"></script>
+            <!-- <link rel="stylesheet" href="{{ asset('public/css/app.css') }}">
+            <script src="{{ asset('js/app.js') }}"></script> -->
     </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
         <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
