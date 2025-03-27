@@ -1,0 +1,46 @@
+/* Стилізація випадаючої кнопки */
+.dropbtn {
+    /* background-color: #4CAF50; */
+    color: white;
+    padding: 12px;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Контейнер <div> - необхідно розмістити випадаючий контент */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Випадаючий контент (приховано за замовчуванням) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    /* background-color: #f9f9f9; */
+    /* min-width: 8px; */
+    /* box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); */
+    /* z-index: 1; */
+  }
+  
+  /* Посилання всередині випадаючого списку */
+  .dropdown-content a {
+    color: black;
+    /* padding: 5px 8px; */
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Змінити колір випадаючих посилань при наведенні */
+  .dropdown-content a:hover {background-color: #f1f1f1}
+  
+  /* Показати випадаюче меню при наведенні */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  /* Змінити колір фону кнопки випадаючого списку, коли відображається зміст випадаючого списку. */
+  .dropdown:hover .dropbtn {
+    /* background-color: #3e8e41; */
+  }
