@@ -5,6 +5,7 @@ return [
     'portfolio' => 'Portfólio',
     'about' => 'O mne',
     'contact' => 'Kontakt',
+    'contactMe' => 'Kontaktujte ma',
     'logIn' => 'Prihlásiť',
     'register' => 'Registrácia'
 ];
