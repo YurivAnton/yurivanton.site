@@ -5,6 +5,7 @@ return [
     'portfolio' => 'Portfolio',
     'about' => 'About',
     'contact' => 'Contact',
+    'contactMe' => 'Contact Me',
     'logIn' => 'Log In',
     'register' => 'Register'
 ];
