@@ -45,22 +45,22 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 // Create items of languages menu
-const dropdownLang = document.querySelector('#dropdownLang');
+const dropdownLang = document.getElementById('dropdownLang');
 dropdownLang.addEventListener('click', function(event){
     event.preventDefault();
     const containerLang = document.querySelector('#containerLang');
     containerLang.classList.add('dropdown');
-})
-/* dropdownLang.addEventListener('click', function(event){
-    const div = document.createElement('div');
-    const aUa = document.createElement('a');
-    aUa.href = 'change/ua';
-    aUa.classList.add('nav-link');
-    aUa.textContent = 'UA';
+});
 
-    div.append(aUa);
-    div.classList.add('dropdown-content');
+//jump to the sections on the page
+function jumper(from, to){
+    let f = document.getElementById(from);
+    let t = document.getElementById(to);
 
-    dropdownLang.append(div);
-}) */
-console.log(dropdownLang);
+    f.addEventListener('click', function(){
+        t.scrollIntoView({ alignToTop: "true" });
+    });
+}
+jumper('fromPortfolio', 'portfolio');
+jumper('fromAbout', 'about');
+jumper('fromContact', 'contact');
