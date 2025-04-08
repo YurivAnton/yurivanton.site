@@ -16,9 +16,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">{{__('headNav.portfolio')}}</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">{{__('headNav.about')}}</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#contact">{{__('headNav.contact')}}</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a id="fromPortfolio" class="nav-link py-3 px-0 px-lg-3 rounded">{{__('headNav.portfolio')}}</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a id="fromAbout" class="nav-link py-3 px-0 px-lg-3 rounded">{{__('headNav.about')}}</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a id="fromContact" class="nav-link py-3 px-0 px-lg-3 rounded">{{__('headNav.contact')}}</a></li>
                         @if (Route::has('login'))
                             @auth
                             <a
@@ -51,25 +51,12 @@
                                 </div>
                             </li>
                         </div>
-
-                        <!-- <div class="dropdown">
-                            <li class="nav-item mx-0 mx-lg-1">
-                                @php($languages = ["ua" => "Україна", "en" => "English", "sk" => "Slovensko"])
-                                <a class="nav-link py-3 px-0 px-lg-3 rounded">{{ $languages[Session::get('locale', "en")] }}</a>
-                                <div class="dropdown-content">
-                                    <a href="change/ua" class="nav-link py-3 px-0 px-lg-3 rounded">UA</a>
-                                    <a href="change/en" class="nav-link py-3 px-0 px-lg-3 rounded">EN</a>
-                                    <a href="change/sk" class="nav-link py-3 px-0 px-lg-3 rounded">SK</a>
-                                </div>
-                            </li>
-                        </div> -->
                     </ul>
                 </div>
             </div>
         </nav>
         
         {{ $slot }}
-
 
         <div class="copyright py-4 text-center text-white">
             <div class="container"><small>Copyright &copy; yurivanton.site 2025</small></div>
