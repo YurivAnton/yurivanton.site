@@ -42,5 +42,25 @@ window.addEventListener('DOMContentLoaded', event => {
             }
         });
     });
-
 });
+
+// Create items of languages menu
+const dropdownLang = document.querySelector('#dropdownLang');
+dropdownLang.addEventListener('click', function(event){
+    event.preventDefault();
+    const containerLang = document.querySelector('#containerLang');
+    containerLang.classList.add('dropdown');
+})
+/* dropdownLang.addEventListener('click', function(event){
+    const div = document.createElement('div');
+    const aUa = document.createElement('a');
+    aUa.href = 'change/ua';
+    aUa.classList.add('nav-link');
+    aUa.textContent = 'UA';
+
+    div.append(aUa);
+    div.classList.add('dropdown-content');
+
+    dropdownLang.append(div);
+}) */
+console.log(dropdownLang);

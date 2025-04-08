@@ -3,5 +3,5 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 <link href="{{ asset('css/styles.css'); }}" rel="stylesheet" />
 <link href="{{ asset('css/lang.css'); }}" rel="stylesheet" />
-<script src="{{ asset('js/myJs.js'); }}"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
