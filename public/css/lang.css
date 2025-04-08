@@ -26,7 +26,7 @@
   
   /* Посилання всередині випадаючого списку */
   .dropdown-content a {
-    color: black;
+    color: rgb(9, 111, 194);
     /* padding: 5px 8px; */
     text-decoration: none;
     display: block;
@@ -42,5 +42,5 @@
   
   /* Змінити колір фону кнопки випадаючого списку, коли відображається зміст випадаючого списку. */
   .dropdown:hover .dropbtn {
-    /* background-color: #3e8e41; */
+    background-color: #3e8e41;
   }

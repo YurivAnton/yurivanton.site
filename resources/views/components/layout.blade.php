@@ -42,7 +42,20 @@
                             @endif
                             @endauth
                         @endif
-                        <div class="dropdown">
+
+                        <div id="containerLang">
+                            <li class="nav-item mx-0 mx-lg-1">
+                                @php($languages = ["ua" => "Україна", "en" => "English", "sk" => "Slovensko"])
+                                <a id="dropdownLang" class="nav-link py-3 px-0 px-lg-3 rounded">{{ $languages[Session::get('locale', "en")] }}</a>
+                                <div class="dropdown-content">
+                                    <a href="change/ua" class="py-3 px-0 px-lg-3 rounded">UA</a>
+                                    <a href="change/en" class="py-3 px-0 px-lg-3 rounded">EN</a>
+                                    <a href="change/sk" class="py-3 px-0 px-lg-3 rounded">SK</a>
+                                </div>
+                            </li>
+                        </div>
+
+                        <!-- <div class="dropdown">
                             <li class="nav-item mx-0 mx-lg-1">
                                 @php($languages = ["ua" => "Україна", "en" => "English", "sk" => "Slovensko"])
                                 <a class="nav-link py-3 px-0 px-lg-3 rounded">{{ $languages[Session::get('locale', "en")] }}</a>
@@ -52,7 +65,7 @@
                                     <a href="change/sk" class="nav-link py-3 px-0 px-lg-3 rounded">SK</a>
                                 </div>
                             </li>
-                        </div>
+                        </div> -->
                     </ul>
                 </div>
             </div>
@@ -61,7 +74,9 @@
         {{ $slot }}
 
 
-        
+        <div class="copyright py-4 text-center text-white">
+            <div class="container"><small>Copyright &copy; yurivanton.site 2025</small></div>
+        </div>
 	</body>
-    
+    <script src="{{ asset('js/myJs.js'); }}"></script>
 </html>
