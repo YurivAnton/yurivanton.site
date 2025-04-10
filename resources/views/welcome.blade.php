@@ -156,7 +156,7 @@
                             </div>
                             <!-- Submit error message-->
                             <!-- Submit Button-->
-                            <button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">{{__('contactForm.submit')}}</button>
+                            <button class="btn btn-primary btn-xl" id="submitButton" type="submit">{{__('contactForm.submit')}}</button>
                             <!-- <input class="btn btn-primary btn-xl" id="submitButton" type="submit" value="Send"> -->
                         </form>
                     </div>
