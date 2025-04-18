@@ -11,7 +11,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/contact', [ContactController::class, 'contact'])->name('contact.contact');
+Route::get('/contact', [ContactController::class, 'contact']);
 
 
 Route::get('/dashboard', function () {
