@@ -57,9 +57,11 @@ function jumper(from, to){
     let f = document.getElementById(from);
     let t = document.getElementById(to);
 
-    f.addEventListener('click', function(){
-        t.scrollIntoView({ alignToTop: "true" });
-    });
+    if(f && t){
+        f.addEventListener('click', function(){
+            t.scrollIntoView({ alignToTop: "true" });
+        });
+    }
 }
 jumper('fromPortfolio', 'portfolio');
 jumper('fromAbout', 'about');

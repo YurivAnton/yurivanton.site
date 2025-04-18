@@ -92,8 +92,8 @@
                 </div>
                 <!-- About Section Content-->
                 <div class="row">
-                    <div class="col-lg-4 ms-auto"><p class="lead"></p></div>
-                    <div class="col-lg-4 me-auto"><p class="lead"></p></div>
+                    <div class="col-lg-4 ms-auto"><p class="lead">{{__('about.me')}}</p></div>
+                    <div class="col-lg-4 me-auto"><p class="lead">{{__('about.my_goals')}}</p></div>
                 </div>
             </div>
         </section>
