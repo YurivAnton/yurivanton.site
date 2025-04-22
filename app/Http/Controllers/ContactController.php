@@ -15,9 +15,7 @@ class ContactController extends Controller
         $validated = $request->validated();
         $data = $request->validated();
 
-        // return var_dump($data);
         Mail::to('yurivanton@gmail.com')->send(new SendEmail($data));
-        // return response()->json(['success' => 'Email sent successfully.']);
         return redirect()->back();
     }
 }
