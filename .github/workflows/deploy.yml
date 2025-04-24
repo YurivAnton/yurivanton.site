@@ -29,7 +29,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
-             # Заміни на твій шлях
+          server-dir: yurivanton.site/web/   # Заміни на твій шлях
           local-dir: ./       # Завантажує всі локальні файли
           exclude: |
             **/.git*
