@@ -1,28 +1,40 @@
-on:
-    push:
-      branches:
-        - main
-jobs:
+name: 🚀 FTP Deploy to Websupport
 
-  deploy:
-    name: Deploy
+on:
+  push:
+    branches:
+      - main  # змінити, якщо деплоїш з іншої гілки
+
+jobs:
+  ftp-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: SSH Deploy
-        uses: appleboy/ssh-action@master
+      - name: 📥 Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🛠 Install Composer dependencies (optional)
+        run: composer install --no-dev --prefer-dist --optimize-autoloader
+
+      - name: 🧼 Cleanup (optional)
+        run: |
+          rm -rf tests
+          rm -rf .git
+          rm -rf node_modules
+
+      - name: 📤 FTP Deploy
+        uses: ftp-deploy-action/ftp-deploy-action@v1
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: | 
-            cd ~/yurivanton.site/web/
-            php artisan down
-            git pull
-            composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-            php artisan migrate --force
-            npm run
-            php artisan optimize:clear
-            php artisan optimize
-            php artisan queue:restart
-            php artisan up
+          ftp-server: ${{ secrets.FTP_HOST }}
+          ftp-username: ${{ secrets.FTP_USERNAME }}
+          ftp-password: ${{ secrets.FTP_PASSWORD }}
+          ftp-port: 21
+          remote-dir: /web/  # Заміни на свій шлях
+          local-dir: ./      # Завантажує всі локальні файли
+          exclude: |
+            **/.git*
+            **/.github*
+            **/node_modules/**
+            **/tests/**
+            .env
+            README.md
