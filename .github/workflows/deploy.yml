@@ -23,13 +23,13 @@ jobs:
           rm -rf node_modules
 
       - name: 📤 FTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          ftp-server: ${{ secrets.FTP_HOST }}
-          ftp-username: ${{ secrets.FTP_USERNAME }}
-          ftp-password: ${{ secrets.FTP_PASSWORD }}
-          ftp-port: 21
-          remote-dir: /web/   # Заміни на твій шлях
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+             # Заміни на твій шлях
           local-dir: ./       # Завантажує всі локальні файли
           exclude: |
             **/.git*
