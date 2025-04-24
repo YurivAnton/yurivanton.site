@@ -11,6 +11,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('/contact', [ContactController::class, 'contact']);
 Route::get('/#contact', function () {
     return view('welcome');
