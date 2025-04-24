@@ -3,7 +3,7 @@ name: 🚀 FTP Deploy to Websupport
 on:
   push:
     branches:
-      - main  # змінити, якщо деплоїш з іншої гілки
+      - main  # Заміни на свою гілку, якщо потрібно
 
 jobs:
   ftp-deploy:
@@ -13,24 +13,24 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v3
 
-      - name: 🛠 Install Composer dependencies (optional)
+      - name: 🛠 Install Composer dependencies (якщо потрібно)
         run: composer install --no-dev --prefer-dist --optimize-autoloader
 
-      - name: 🧼 Cleanup (optional)
+      - name: 🧼 Cleanup (опційно)
         run: |
           rm -rf tests
           rm -rf .git
           rm -rf node_modules
 
       - name: 📤 FTP Deploy
-        uses: ftp-deploy-action/ftp-deploy-action@v1
+        uses: SamKirkland/FTP-Deploy-Action@v4
         with:
           ftp-server: ${{ secrets.FTP_HOST }}
           ftp-username: ${{ secrets.FTP_USERNAME }}
           ftp-password: ${{ secrets.FTP_PASSWORD }}
           ftp-port: 21
-          remote-dir: /web/  # Заміни на свій шлях
-          local-dir: ./      # Завантажує всі локальні файли
+          remote-dir: /web/   # Заміни на твій шлях
+          local-dir: ./       # Завантажує всі локальні файли
           exclude: |
             **/.git*
             **/.github*
