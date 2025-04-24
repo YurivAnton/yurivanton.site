@@ -1,40 +1,28 @@
-name: 🚀 FTP Deploy to Websupport
-
 on:
-  push:
-    branches:
-      - main  # Заміни на свою гілку, якщо потрібно
-
+    push:
+      branches:
+        - main
 jobs:
-  ftp-deploy:
+
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
-
     steps:
-      - name: 📥 Checkout code
-        uses: actions/checkout@v3
-
-      - name: 🛠 Install Composer dependencies (якщо потрібно)
-        run: composer install --no-dev --prefer-dist --optimize-autoloader
-
-      - name: 🧼 Cleanup (опційно)
-        run: |
-          rm -rf tests
-          rm -rf .git
-          rm -rf node_modules
-
-      - name: 📤 FTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: SSH Deploy
+        uses: appleboy/ssh-action@master
         with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 22
-          server-dir: yurivanton.site/web/   # Заміни на твій шлях
-          local-dir: ./       # Завантажує всі локальні файли
-          exclude: |
-            **/.git*
-            **/.github*
-            **/node_modules/**
-            **/tests/**
-            .env
-            README.md
+          host: shell.r6.websupport.sk
+          username: uid5485023
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 26548
+          script: | 
+            cd ~/yurivanton.site/web/
+            php artisan down
+            git pull
+            composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+            php artisan migrate --force
+            npm run
+            php artisan optimize:clear
+            php artisan optimize
+            php artisan queue:restart
+            php artisan up
