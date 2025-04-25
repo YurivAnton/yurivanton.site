@@ -49,12 +49,31 @@
                         @endif
                         <div id="containerLang">
                             <li class="nav-item mx-0 mx-lg-1">
-                                @php($languages = ["ua" => "Україна", "en" => "English", "sk" => "Slovensko"])
-                                <a id="dropdownLang" class="nav-link-lang py-3 px-0 px-lg-3 rounded">{{ $languages[Session::get('locale', "en")] }}</a>
+                                
+                                @php
+                                    $languages = [
+                                        'ua' => ['label' => 'Українська', 'flag' => 'ua.svg'],
+                                        'en' => ['label' => 'English', 'flag' => 'gb.svg'],
+                                        'sk' => ['label' => 'Slovenský', 'flag' => 'sk.svg'],
+                                    ];
+                                    $current = Session::get('locale', 'en');
+                                @endphp
+                                
+                                <a id="dropdownLang" class="nav-link-lang py-3 px-0 px-lg-3 rounded"><img src="{{ asset('img/flags/' . $languages[$current]['flag']) }}" alt="{{ $languages[$current]['label'] }}" class="flag-icon">
+                                    {{ $languages[$current]['label'] }}
+                                </a>
                                 <div class="dropdown-content">
-                                    <a href="change/ua" class="py-3 px-0 px-lg-3 rounded">UA</a>
+                                @foreach ($languages as $code => $info)
+                                    @if ($code !== $current)
+                                        <a href="{{ url('change/' . $code) }}" class="py-3 px-0 px-lg-3 rounded">
+                                            <img src="{{ asset('img/flags/' . $info['flag']) }}" alt="{{ $info['label'] }}" class="flag-icon">
+                                            {{ $info['label'] }}
+                                        </a>
+                                    @endif
+                                @endforeach
+                                    <!-- <a href="change/ua" class="py-3 px-0 px-lg-3 rounded">UA</a>
                                     <a href="change/en" class="py-3 px-0 px-lg-3 rounded">EN</a>
-                                    <a href="change/sk" class="py-3 px-0 px-lg-3 rounded">SK</a>
+                                    <a href="change/sk" class="py-3 px-0 px-lg-3 rounded">SK</a> -->
                                 </div>
                             </li>
                         </div>
