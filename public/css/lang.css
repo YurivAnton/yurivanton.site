@@ -1,46 +1,65 @@
-/* Стилізація випадаючої кнопки */
+/* Стилізація кнопки випадаючого меню */
 .dropbtn {
-    /* background-color: #4CAF50; */
-    color: white;
-    padding: 12px;
-    font-size: 12px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  /* Контейнер <div> - необхідно розмістити випадаючий контент */
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  /* Випадаючий контент (приховано за замовчуванням) */
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    /* background-color: #f9f9f9; */
-    /* min-width: 8px; */
-    /* box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); */
-    /* z-index: 1; */
-  }
-  
-  /* Посилання всередині випадаючого списку */
-  .dropdown-content a {
-    color: rgb(9, 111, 194);
-    /* padding: 5px 8px; */
-    text-decoration: none;
-    display: block;
-  }
-  
-  /* Змінити колір випадаючих посилань при наведенні */
-  .dropdown-content a:hover {background-color: #f1f1f1}
-  
-  /* Показати випадаюче меню при наведенні */
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  
-  /* Змінити колір фону кнопки випадаючого списку, коли відображається зміст випадаючого списку. */
-  .dropdown:hover .dropbtn {
-    background-color: #3e8e41;
-  }
+  background: none;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+}
+
+/* Стилізація контейнера випадаючого меню */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Стилізація контенту випадаючого меню */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 150px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  border-radius: 8px;
+  overflow: hidden;
+  top: 100%;
+  left: 0;
+}
+
+/* Стилізація посилань всередині меню */
+.dropdown-content a {
+  color: #333;
+  padding: 10px 16px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s;
+}
+
+/* Ховер-ефект для елементів меню */
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Показуємо контент при наведенні на контейнер */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Зміна кольору кнопки при активному меню */
+.dropdown:hover .dropbtn {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Стилізація прапорців */
+.flag-icon {
+  width: 20px;
+  height: auto;
+  border-radius: 2px;
+}
