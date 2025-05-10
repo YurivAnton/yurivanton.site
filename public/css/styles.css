@@ -132,6 +132,10 @@ header.masthead {
   padding-bottom: 20px;
 }
 
+.report {
+  padding-top: 50px;
+}
+
 footer.copyright {
   background-color: var(--bs-secondary) !important;
 }
@@ -167,3 +171,22 @@ main, #about, #contact, #portfolio {
   }
 }
 
+.sticky-mobile-toggle {
+  position: sticky;
+  top: 56px; /* висота головного меню */
+  z-index: 1020;
+  background-color: white;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.sticky-mobile-menu {
+  position: sticky;
+  top: 96px; /* нижче кнопок */
+  z-index: 1010;
+}
+
+canvas {
+  max-width: 600px; 
+  display: none;
+}

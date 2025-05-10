@@ -14,13 +14,14 @@ jobs:
           host: shell.r6.websupport.sk
           username: uid5485023
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 27567
+          port: 28379
           script: | 
             cd ~/yurivanton.site/web/
             php artisan down
             git pull
             composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
             php artisan migrate --force
+            php artisan db:seed
             npm run
             php artisan optimize:clear
             php artisan optimize
