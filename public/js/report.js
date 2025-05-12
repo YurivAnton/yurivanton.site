@@ -78,26 +78,35 @@ function initSignatureCanvas(canvasId, clearBtnId, saveBtnId, toggleBtnId) {
     const ctx = canvas.getContext('2d');
     let drawing = false;
 
-    function getPosition(event) {
+    function getPosition(event, canvas) {
         const rect = canvas.getBoundingClientRect();
-        const point = event.touches ? event.touches[0] : event;
-        return {
-            x: point.clientX - rect.left,
-            y: point.clientY - rect.top
-        };
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+        if (event.touches && event.touches[0]) {
+            return {
+                x: event.touches[0].clientX - rect.left + scrollLeft,
+                y: event.touches[0].clientY - rect.top + scrollTop
+            };
+        } else {
+            return {
+                x: event.clientX - rect.left + scrollLeft,
+                y: event.clientY - rect.top + scrollTop
+            };
+        }
     }
 
     function startDrawing(event) {
         drawing = true;
-        const pos = getPosition(event);
+        const pos = getPosition(event, canvas);
         ctx.beginPath();
         ctx.moveTo(pos.x, pos.y);
     }
-
+    
     function draw(event) {
         if (!drawing) return;
         event.preventDefault();
-        const pos = getPosition(event);
+        const pos = getPosition(event, canvas);
         ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
     }
