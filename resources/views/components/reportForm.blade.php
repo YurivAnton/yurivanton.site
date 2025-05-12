@@ -166,7 +166,7 @@
         @endforeach
     </select>
     <button id="createCanvasTech" type="button" class="btn btn-outline-secondary btn-sm">Podpís</button>
-    <canvas id="canvasTech" width="600" height="250" class="border rounded d-block mt-2 w-100 d-none"></canvas>
+    <canvas id="canvasTech" width="600" height="600" class="border rounded d-block mt-2 w-100 d-none"></canvas>
     <div class="mt-2">
         <button id="clearCanvasTech" class="btn btn-warning btn-sm d-none">Vymazať</button>
         <button id="saveCanvasTech" class="btn btn-success btn-sm d-none">Uložiť</button>
@@ -177,7 +177,7 @@
     <legend>Podpis zákazníka</legend>
     <input id="customerSign" name="nameCustomerSign" type="text" class="form-control mb-2" placeholder="Meno zákazníka">
     <button id="createCanvasCust" type="button" class="btn btn-outline-secondary btn-sm">Podpís</button>
-    <canvas id="canvasCustomer" width="600" height="250" class="border rounded d-block mt-2 w-100 d-none"></canvas>
+    <canvas id="canvasCustomer" width="600" height="600" class="border rounded d-block mt-2 w-100 d-none"></canvas>
     <div class="mt-2">
         <button id="clearCanvasCustomer" class="btn btn-warning btn-sm d-none">Vymazať</button>
         <button id="saveCanvasCustomer" class="btn btn-success btn-sm d-none">Uložiť</button>

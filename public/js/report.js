@@ -73,66 +73,78 @@ function initSignatureCanvas(canvasId, clearBtnId, saveBtnId, toggleBtnId) {
     const clearBtn = document.getElementById(clearBtnId);
     const saveBtn = document.getElementById(saveBtnId);
     const toggleBtn = document.getElementById(toggleBtnId);
-    const ctx = canvas.getContext("2d");
-
+    const ctx = canvas.getContext('2d');
     let drawing = false;
 
+    // Масштабування canvas для чітких координат
+    function resizeCanvas() {
+        const ratio = window.devicePixelRatio || 1;
+        const width = canvas.offsetWidth;
+        const height = canvas.offsetHeight;
+
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+        canvas.getContext('2d').scale(ratio, ratio);
+    }
+
+    resizeCanvas(); // при ініціалізації
+
+    // Повертає правильні координати дотику/миші
     function getPosition(event) {
         const rect = canvas.getBoundingClientRect();
+
         let x, y;
-    
         if (event.touches && event.touches.length > 0) {
-            x = event.touches[0].pageX - rect.left - window.scrollX;
-            y = event.touches[0].pageY - rect.top - window.scrollY;
+            x = event.touches[0].clientX - rect.left;
+            y = event.touches[0].clientY - rect.top;
         } else {
-            x = event.pageX - rect.left - window.scrollX;
-            y = event.pageY - rect.top - window.scrollY;
+            x = event.clientX - rect.left;
+            y = event.clientY - rect.top;
         }
-    
+
         return { x, y };
     }
 
-    function startDraw(e) {
+    function startDrawing(event) {
+        event.preventDefault();
         drawing = true;
-        const pos = getPosition(e);
+        const pos = getPosition(event);
         ctx.beginPath();
         ctx.moveTo(pos.x, pos.y);
     }
 
-    function draw(e) {
+    function draw(event) {
         if (!drawing) return;
-        e.preventDefault(); // stop scroll on touch devices
-        const pos = getPosition(e);
+        event.preventDefault();
+        const pos = getPosition(event);
         ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
     }
 
-    function stopDraw() {
+    function stopDrawing() {
         drawing = false;
     }
 
-    // Mouse events
-    canvas.addEventListener("mousedown", startDraw);
-    canvas.addEventListener("mousemove", draw);
-    canvas.addEventListener("mouseup", stopDraw);
-    canvas.addEventListener("mouseleave", stopDraw);
+    // Події
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseleave', stopDrawing);
+    canvas.addEventListener('touchstart', startDrawing);
+    canvas.addEventListener('touchmove', draw);
+    canvas.addEventListener('touchend', stopDrawing);
+    canvas.addEventListener('touchcancel', stopDrawing);
 
-    // Touch events
-    canvas.addEventListener("touchstart", startDraw, { passive: true });
-    canvas.addEventListener("touchmove", draw, { passive: false });
-    canvas.addEventListener("touchend", stopDraw);
-    canvas.addEventListener("touchcancel", stopDraw);
-
-    // Show signature UI
-    toggleBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        canvas.classList.remove("d-none");
-        clearBtn.classList.remove("d-none");
-        saveBtn.classList.remove("d-none");
+    toggleBtn.addEventListener('click', function (event) {
+        event.preventDefault();
+        canvas.classList.remove('d-none');
+        clearBtn.classList.remove('d-none');
+        saveBtn.classList.remove('d-none');
+        resizeCanvas(); // оновити розмір, коли показали canvas
     });
 
-    clearBtn.addEventListener("click", function (e) {
-        e.preventDefault();
+    clearBtn.addEventListener('click', function (event) {
+        event.preventDefault();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
 
