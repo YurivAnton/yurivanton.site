@@ -77,18 +77,18 @@ function initSignatureCanvas(canvasId, clearBtnId, saveBtnId, toggleBtnId) {
 
     let drawing = false;
 
-    function getPosition(e) {
+    function getPosition(event) {
         const rect = canvas.getBoundingClientRect();
         let x, y;
-
-        if (e.touches && e.touches.length > 0) {
-            x = e.touches[0].clientX - rect.left;
-            y = e.touches[0].clientY - rect.top;
+    
+        if (event.touches && event.touches.length > 0) {
+            x = event.touches[0].pageX - rect.left - window.scrollX;
+            y = event.touches[0].pageY - rect.top - window.scrollY;
         } else {
-            x = e.clientX - rect.left;
-            y = e.clientY - rect.top;
+            x = event.pageX - rect.left - window.scrollX;
+            y = event.pageY - rect.top - window.scrollY;
         }
-
+    
         return { x, y };
     }
 
