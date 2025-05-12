@@ -1,75 +1,73 @@
 "use strict";
 
-// ====== Клієнт та офіси ======
 const customerNames = document.getElementById('customerName');
 const officeName = document.getElementById('officeName');
-const customerAddress = document.getElementById('customerAddress');
-const customerCity = document.getElementById('customerCity');
-const officeAddress = document.getElementById('officeAddress');
-const officeCity = document.getElementById('officeCity');
 
 customerNames.addEventListener('change', function () {
-    const selectedCustomer = customers.find(c => c.id == this.value);
-    if (!selectedCustomer) return;
+    const customerAddress = document.getElementById('customerAddress');
+    const customerCity = document.getElementById('customerCity');
+    const officeAddress = document.getElementById('officeAddress');
+    const officeCity = document.getElementById('officeCity');
 
-    customerAddress.value = selectedCustomer.address;
-    customerCity.value = selectedCustomer.city;
+    customers.forEach(customer => {
+        if (this.value == customer.id) {
+            customerAddress.value = customer.address;
+            customerCity.value = customer.city;
 
-    officeName.innerHTML = '';
-    selectedCustomer.offices.forEach(office => {
-        const option = document.createElement('option');
-        option.value = office.id;
-        option.innerText = office.name;
-        officeName.append(option);
+            officeName.innerHTML = '';
+            customer.offices.forEach((office, index) => {
+                let option = document.createElement('option');
+                option.value = office.id;
+                option.innerText = office.name;
+                officeName.append(option);
+
+                if (index === 0) {
+                    officeAddress.value = office.address;
+                    officeCity.value = office.city;
+                }
+            });
+        }
     });
-
-    const firstOffice = selectedCustomer.offices[0];
-    if (firstOffice) {
-        officeAddress.value = firstOffice.address;
-        officeCity.value = firstOffice.city;
-    }
 });
 
 officeName.addEventListener('change', function () {
-    const selectedOffice = customers
-        .flatMap(c => c.offices)
-        .find(o => o.id == this.value);
+    const officeAddress = document.getElementById('officeAddress');
+    const officeCity = document.getElementById('officeCity');
 
-    if (selectedOffice) {
-        officeAddress.value = selectedOffice.address;
-        officeCity.value = selectedOffice.city;
+    for (let customer of customers) {
+        for (let office of customer.offices) {
+            if (this.value == office.id) {
+                officeAddress.value = office.address;
+                officeCity.value = office.city;
+            }
+        }
     }
 });
 
-// ====== Клонування блоків ======
-function cloneAndInsert(beforeEl, targetId) {
-    const original = document.getElementById(targetId);
-    const clone = original.cloneNode(true);
-
-    // Очистити введення
-    clone.querySelectorAll('input, select, textarea').forEach(el => el.value = '');
-    beforeEl.insertAdjacentElement('beforeBegin', clone);
-
-    // Прокрутити до нового елемента
-    clone.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-document.getElementById('addWorkDay').addEventListener('click', e => {
-    e.preventDefault();
-    cloneAndInsert(e.target, 'dateTransport');
+const addWorkDay = document.getElementById('addWorkDay');
+addWorkDay.addEventListener('click', function (event) {
+    event.preventDefault();
+    const clone = document.getElementById('dateTransport').cloneNode(true);
+    clone.querySelectorAll('input').forEach(input => input.value = '');
+    addWorkDay.insertAdjacentElement('beforeBegin', clone);
 });
 
-document.getElementById('addTechnik').addEventListener('click', e => {
-    e.preventDefault();
-    cloneAndInsert(e.target, 'technik');
+const addTechnik = document.getElementById('addTechnik');
+addTechnik.addEventListener('click', function (event) {
+    event.preventDefault();
+    const clone = document.getElementById('technik').cloneNode(true);
+    clone.querySelectorAll('input').forEach(input => input.value = '');
+    addTechnik.insertAdjacentElement('beforeBegin', clone);
 });
 
-document.getElementById('addSpareParts').addEventListener('click', e => {
-    e.preventDefault();
-    cloneAndInsert(e.target, 'spareParts');
+const addSpareParts = document.getElementById('addSpareParts');
+addSpareParts.addEventListener('click', function (event) {
+    event.preventDefault();
+    const clone = document.getElementById('spareParts').cloneNode(true);
+    clone.querySelectorAll('input').forEach(input => input.value = '');
+    addSpareParts.insertAdjacentElement('beforeBegin', clone);
 });
 
-// ====== Підписи (Canvas) ======
 function initSignatureCanvas(canvasId, clearBtnId, saveBtnId, toggleBtnId) {
     const canvas = document.getElementById(canvasId);
     const clearBtn = document.getElementById(clearBtnId);
@@ -82,7 +80,7 @@ function initSignatureCanvas(canvasId, clearBtnId, saveBtnId, toggleBtnId) {
         const rect = canvas.getBoundingClientRect();
         const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
+
         if (event.touches && event.touches[0]) {
             return {
                 x: event.touches[0].clientX - rect.left + scrollLeft,
@@ -102,7 +100,7 @@ function initSignatureCanvas(canvasId, clearBtnId, saveBtnId, toggleBtnId) {
         ctx.beginPath();
         ctx.moveTo(pos.x, pos.y);
     }
-    
+
     function draw(event) {
         if (!drawing) return;
         event.preventDefault();
@@ -115,31 +113,25 @@ function initSignatureCanvas(canvasId, clearBtnId, saveBtnId, toggleBtnId) {
         drawing = false;
     }
 
-    // Події малювання
-    ['mousedown', 'mousemove', 'mouseup', 'mouseleave'].forEach(evt => {
-        canvas.addEventListener(evt, event => {
-            if (evt === 'mousedown') startDrawing(event);
-            else if (evt === 'mousemove') draw(event);
-            else stopDrawing();
-        });
-    });
+    // Event listeners for drawing
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseleave', stopDrawing);
+    canvas.addEventListener('touchstart', startDrawing);
+    canvas.addEventListener('touchmove', draw);
+    canvas.addEventListener('touchend', stopDrawing);
+    canvas.addEventListener('touchcancel', stopDrawing);
 
-    ['touchstart', 'touchmove', 'touchend', 'touchcancel'].forEach(evt => {
-        canvas.addEventListener(evt, event => {
-            if (evt === 'touchstart') startDrawing(event);
-            else if (evt === 'touchmove') draw(event);
-            else stopDrawing();
-        }, { passive: false });
-    });
-
-    // Показати елементи
+    // Show signature UI
     toggleBtn.addEventListener('click', function (event) {
         event.preventDefault();
-        [canvas, clearBtn, saveBtn].forEach(el => el.classList.remove('d-none'));
-        canvas.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        canvas.classList.remove('d-none');
+        clearBtn.classList.remove('d-none');
+        saveBtn.classList.remove('d-none');
     });
 
-    // Очистити
+    // Clear signature
     clearBtn.addEventListener('click', function (event) {
         event.preventDefault();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -148,6 +140,5 @@ function initSignatureCanvas(canvasId, clearBtnId, saveBtnId, toggleBtnId) {
     return ctx;
 }
 
-// Ініціалізація підписів
 const ctxTech = initSignatureCanvas('canvasTech', 'clearCanvasTech', 'saveCanvasTech', 'createCanvasTech');
 const ctxCust = initSignatureCanvas('canvasCustomer', 'clearCanvasCustomer', 'saveCanvasCustomer', 'createCanvasCust');
