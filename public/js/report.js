@@ -153,3 +153,18 @@ function initSignatureCanvas(canvasId, clearBtnId, saveBtnId, toggleBtnId) {
 
 const ctxTech = initSignatureCanvas('canvasTech', 'clearCanvasTech', 'saveCanvasTech', 'createCanvasTech');
 const ctxCust = initSignatureCanvas('canvasCustomer', 'clearCanvasCustomer', 'saveCanvasCustomer', 'createCanvasCust');
+
+const formReport = document.getElementById('formReport');
+const save = document.getElementById('save');
+
+save.addEventListener('click', function(event){
+    const formData = new FormData(formReport);
+    formData.set('signTech', canvasTech.toDataURL("image/png"));
+    formData.set('signCustomer', canvasCustomer.toDataURL("image/png"));
+
+    document.getElementById('signTech').value = canvasTech.toDataURL("image/png");
+    document.getElementById('signCustomer').value = canvasCustomer.toDataURL("image/png");
+
+    formReport.action = '/saveReport';
+    formReport.submit();
+});

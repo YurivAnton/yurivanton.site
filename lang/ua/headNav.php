@@ -1,6 +1,9 @@
 <?php
 return [
     'nameHead' => 'Юрів Антон',
+    'dashboard' => 'Інформаційна панель',
+    'report' => 'Звіт',
+    'logOut' => 'Вийти',
     'menu' => 'Меню',
     'portfolio' => 'Портфоліо',
     'about' => 'Про мене',

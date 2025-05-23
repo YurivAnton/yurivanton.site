@@ -11,10 +11,10 @@ jobs:
       - name: SSH Deploy
         uses: appleboy/ssh-action@master
         with:
-          host: shell.r6.websupport.sk
-          username: uid5485023
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 27204
+          port: ${{ secrets.SSH_PORT }}
           script: | 
             cd ~/yurivanton.site/web/
             php artisan down

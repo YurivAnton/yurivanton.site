@@ -27,7 +27,12 @@
                         @auth
                             <li class="nav-item mx-0 mx-lg-1">
                                 <a href="{{ url('/dashboard') }}" class="nav-link py-3 px-0 px-lg-3 rounded">
-                                    Dashboard
+                                {{ __('headNav.dashboard') }}
+                                </a>
+                            </li>
+                            <li class="nav-item mx-0 mx-lg-1">
+                                <a href="{{ url('/report') }}" class="nav-link py-3 px-0 px-lg-3 rounded">
+                                {{ __('headNav.report') }}
                                 </a>
                             </li>
                             <li class="nav-item mx-0 mx-lg-1">
@@ -35,7 +40,7 @@
                                     @csrf
                                     <a href="{{ route('logout') }}" class="nav-link py-3 px-0 px-lg-3 rounded"
                                        onclick="event.preventDefault(); this.closest('form').submit();">
-                                        {{ __('Log Out') }}
+                                       {{ __('headNav.logOut') }}
                                     </a>
                                 </form>
                             </li>
