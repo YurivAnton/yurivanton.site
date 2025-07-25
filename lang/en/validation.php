@@ -178,6 +178,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        /* 'customerName' => [
+            'required' => 'The customerName field is required.'
+        ] */
     ],
 
     /*
@@ -191,6 +194,18 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'customerName' => 'customer name',
+        'date.*' => 'date',
+        'transportKm' => 'transportation kilometers',
+        'transportTime' => 'transportation time',
+        'technikName.*' => 'technik name',
+        'startTime.*' => 'work start time',
+        'finishTime.*' => 'work finish time',
+        'description' => 'description',
+        'descriptionResult' => 'description of result',
+        'mainTech' => 'name of main technik',
+        'nameCustomerSign' => 'name of the responsible person',
+    ],
 
 ];

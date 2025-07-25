@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('spare_parts', function (Blueprint $table) {
             $table->id();
-            $table->string('nameSparePart');
-            $table->integer('quantitySparePart');
-            $table->string('noteSparePart');
+            $table->string('nameSparePart')->nullable();
+            $table->integer('quantitySparePart')->nullable();
+            $table->string('noteSparePart')->nullable();
             $table->integer('report_id');
             $table->timestamps();
         });

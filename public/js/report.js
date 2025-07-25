@@ -1,9 +1,11 @@
 "use strict";
 
-const customerNames = document.getElementById('customerName');
+const customerId = document.getElementById('customerId');
+const officeId = document.getElementById('officeId');
+const customerName = document.getElementById('customerName');
 const officeName = document.getElementById('officeName');
 
-customerNames.addEventListener('change', function () {
+customerId.addEventListener('change', function () {
     const customerAddress = document.getElementById('customerAddress');
     const customerCity = document.getElementById('customerCity');
     const officeAddress = document.getElementById('officeAddress');
@@ -11,17 +13,20 @@ customerNames.addEventListener('change', function () {
 
     customers.forEach(customer => {
         if (this.value == customer.id) {
+            customerName.value = customer.name;
             customerAddress.value = customer.address;
             customerCity.value = customer.city;
 
-            officeName.innerHTML = '';
+            officeId.innerHTML = '';
             customer.offices.forEach((office, index) => {
+                
                 let option = document.createElement('option');
                 option.value = office.id;
                 option.innerText = office.name;
-                officeName.append(option);
+                officeId.append(option);
 
                 if (index === 0) {
+                    officeName.value = office.name;
                     officeAddress.value = office.address;
                     officeCity.value = office.city;
                 }
@@ -30,13 +35,14 @@ customerNames.addEventListener('change', function () {
     });
 });
 
-officeName.addEventListener('change', function () {
+officeId.addEventListener('change', function () {
     const officeAddress = document.getElementById('officeAddress');
     const officeCity = document.getElementById('officeCity');
 
     for (let customer of customers) {
         for (let office of customer.offices) {
             if (this.value == office.id) {
+                officeName.value = office.name;
                 officeAddress.value = office.address;
                 officeCity.value = office.city;
             }
@@ -44,20 +50,62 @@ officeName.addEventListener('change', function () {
     }
 });
 
-const addWorkDay = document.getElementById('addWorkDay');
-addWorkDay.addEventListener('click', function (event) {
-    event.preventDefault();
-    const clone = document.getElementById('dateTransport').cloneNode(true);
-    clone.querySelectorAll('input').forEach(input => input.value = '');
-    addWorkDay.insertAdjacentElement('beforeBegin', clone);
-});
-
 const addTechnik = document.getElementById('addTechnik');
+let technikIndex = document.querySelectorAll('.technik-block').length - 1;
+const selectTichnik = document.getElementById('selectTechnik');
+
+function attachSelectListener(select) {
+    select.addEventListener('change', function () {
+        const index = this.dataset.index;
+        const selectedName = this.options[this.selectedIndex].text;
+        const hiddenInput = document.getElementById('technikName' + index);
+        if (hiddenInput) {
+            hiddenInput.value = selectedName;
+        }
+    });
+
+    // We trigger manually for the first element if a value has already been selected
+    const selectedName = select.options[select.selectedIndex].text;
+    const hiddenInput = document.getElementById('technikName' + select.dataset.index);
+    if (hiddenInput && select.value !== '') {
+        hiddenInput.value = selectedName;
+    }
+}
+
+// Add a handler to the first select
+attachSelectListener(document.getElementById('selectTechnik0'));
+
 addTechnik.addEventListener('click', function (event) {
     event.preventDefault();
-    const clone = document.getElementById('technik').cloneNode(true);
-    clone.querySelectorAll('input').forEach(input => input.value = '');
-    addTechnik.insertAdjacentElement('beforeBegin', clone);
+    const clone = document.getElementById('technikId').cloneNode(true);
+    technikIndex++;
+
+    for(let elem of clone.querySelectorAll('input, select')){
+        elem.value = '';
+
+        if(elem.id.includes('selectTechnik')){
+            elem.id = 'selectTechnik' + technikIndex;
+            elem.setAttribute('data-index', technikIndex);
+        }
+
+        if(elem.id.includes('technikName')){
+            elem.id = 'technikName' + technikIndex;
+        }
+    };
+    // Show the delete button
+    clone.querySelector('.remove-technician').classList.remove('d-none');
+
+    // Insert the new element before the button
+    this.insertAdjacentElement('beforebegin', clone);
+
+    // Add an event listener to the new select
+    const newSelect = clone.querySelector('[id^="selectTechnik"]');
+    attachSelectListener(newSelect);
+
+    // Add an event listener to the delete button
+    clone.querySelector('.remove-technician').addEventListener('click', function () {
+        clone.remove();
+    });
 });
 
 const addSpareParts = document.getElementById('addSpareParts');
@@ -76,7 +124,7 @@ function initSignatureCanvas(canvasId, clearBtnId, saveBtnId, toggleBtnId) {
     const ctx = canvas.getContext('2d');
     let drawing = false;
 
-    // Масштабування canvas для чітких координат
+    // Canvas scaling for crisp coordinates
     function resizeCanvas() {
         const ratio = window.devicePixelRatio || 1;
         const width = canvas.offsetWidth;
@@ -87,9 +135,9 @@ function initSignatureCanvas(canvasId, clearBtnId, saveBtnId, toggleBtnId) {
         canvas.getContext('2d').scale(ratio, ratio);
     }
 
-    resizeCanvas(); // при ініціалізації
+    resizeCanvas(); // on initialization
 
-    // Повертає правильні координати дотику/миші
+    // Returns correct touch/mouse coordinates
     function getPosition(event) {
         const rect = canvas.getBoundingClientRect();
 
@@ -125,7 +173,7 @@ function initSignatureCanvas(canvasId, clearBtnId, saveBtnId, toggleBtnId) {
         drawing = false;
     }
 
-    // Події
+    // Events
     canvas.addEventListener('mousedown', startDrawing);
     canvas.addEventListener('mousemove', draw);
     canvas.addEventListener('mouseup', stopDrawing);
@@ -140,7 +188,7 @@ function initSignatureCanvas(canvasId, clearBtnId, saveBtnId, toggleBtnId) {
         canvas.classList.remove('d-none');
         clearBtn.classList.remove('d-none');
         saveBtn.classList.remove('d-none');
-        resizeCanvas(); // оновити розмір, коли показали canvas
+        resizeCanvas(); // Update the size when the canvas is shown
     });
 
     clearBtn.addEventListener('click', function (event) {
@@ -151,20 +199,148 @@ function initSignatureCanvas(canvasId, clearBtnId, saveBtnId, toggleBtnId) {
     return ctx;
 }
 
-const ctxTech = initSignatureCanvas('canvasTech', 'clearCanvasTech', 'saveCanvasTech', 'createCanvasTech');
 const ctxCust = initSignatureCanvas('canvasCustomer', 'clearCanvasCustomer', 'saveCanvasCustomer', 'createCanvasCust');
+const mainTech = document.getElementById('mainTech');
+
+mainTech.addEventListener('change', function(){
+    const selectedName = this[this.selectedIndex].text;
+    const fileName = selectedName + '_' + this.selectedIndex + '.png';
+    const imgPath = '/storage/signatures/' + fileName;
+    const signTechPath = document.getElementById('signTechPath');
+
+    signTechPath.value = imgPath;
+
+    const preview = document.getElementById('techSignPreview');
+    preview.innerHTML = ''; // Clear the old
+
+    const img = document.createElement('img');
+    img.src = imgPath;
+    img.style.maxWidth = '200px';
+    img.alt = 'Podpis technika';
+
+    // Let's check if the file exists
+    fetch(imgPath, { method: 'HEAD' }).then(response => {
+        if (response.ok) {
+            preview.appendChild(img);
+        } else {
+            preview.innerHTML = '<p class="text-muted">Podpis neexistuje</p>';
+        }
+    });
+});
 
 const formReport = document.getElementById('formReport');
 const save = document.getElementById('save');
 
 save.addEventListener('click', function(event){
-    const formData = new FormData(formReport);
-    formData.set('signTech', canvasTech.toDataURL("image/png"));
-    formData.set('signCustomer', canvasCustomer.toDataURL("image/png"));
+    event.preventDefault();
 
-    document.getElementById('signTech').value = canvasTech.toDataURL("image/png");
-    document.getElementById('signCustomer').value = canvasCustomer.toDataURL("image/png");
+    const canvasCustomer = document.getElementById('canvasCustomer');
+    const errorDiv = document.getElementById('signCustomerError');
+
+    // Check if the canvas was opened
+    const canvasWasOpened = !canvasCustomer.classList.contains('d-none');
+
+    // If the user hasn't even opened the signature
+    if (!canvasWasOpened) {
+        errorDiv.textContent = 'Prosím, podpíšte sa (kliknite na tlačidlo "Podpis").';
+        errorDiv.classList.remove('d-none');
+        return;
+    }
+
+    // If (the user) opened it but didn’t draw
+    if (isCanvasBlank(canvasCustomer)) {
+        errorDiv.textContent = 'Podpis je prázdny. Prosím, podpíšte sa.';
+        errorDiv.classList.remove('d-none');
+        return;
+    }
+
+    // Successfully — save the image and hide the error
+    errorDiv.classList.add('d-none');
+    errorDiv.textContent = '';
+
+    const signCustomerData = canvasCustomer.toDataURL("image/png");
+
+    document.getElementById('signCustomer').value = signCustomerData;
 
     formReport.action = '/saveReport';
+    formReport.submit();
+});
+
+function isCanvasBlank(canvas) {
+    const blank = document.createElement('canvas');
+    blank.width = canvas.width;
+    blank.height = canvas.height;
+    return canvas.toDataURL() === blank.toDataURL();
+}
+
+const show = document.getElementById('show');
+
+show.addEventListener('click', function(event){
+    event.preventDefault();
+
+    const canvasCustomer = document.getElementById('canvasCustomer');
+    const signCustomerData = canvasCustomer.toDataURL("image/png");
+
+    document.getElementById('signCustomer').value = signCustomerData;
+
+    formReport.action = '/generate-pdf';
+    formReport.target = '_blank';
+    formReport.submit();
+});
+
+const saveSent = document.getElementById('saveSent');
+const customerEmail = document.getElementById('customerEmail');
+
+saveSent.addEventListener('click', function(event){
+    event.preventDefault();
+
+    const canvasCustomer = document.getElementById('canvasCustomer');
+    const errorDiv = document.getElementById('signCustomerError');
+    const emailField = document.getElementById('sendEmail');
+    const emailContainer = document.getElementById('emailContainer');
+    const emailError = document.getElementById('emailError');
+
+    const canvasWasOpened = !canvasCustomer.classList.contains('d-none');
+
+    if (!canvasWasOpened) {
+        errorDiv.textContent = 'Prosím, podpíšte sa (kliknite na tlačidlo "Podpis").';
+        errorDiv.classList.remove('d-none');
+        return;
+    }
+
+    if (isCanvasBlank(canvasCustomer)) {
+        errorDiv.textContent = 'Podpis je prázdny. Prosím, podpíšte sa.';
+        errorDiv.classList.remove('d-none');
+        return;
+    }
+
+    errorDiv.classList.add('d-none');
+    document.getElementById('signCustomer').value = canvasCustomer.toDataURL("image/png");
+
+    if(!customerEmail.value){
+        if(!emailField || emailField.value.trim() === ''){
+            event.preventDefault();
+            emailContainer.classList.remove('d-none');
+            emailError.classList.remove('d-none');
+            emailError.textContent = 'Prosím, zadajte e-mail pre odoslanie protokolu.';
+            return;
+        }
+
+        const email = emailField.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+            event.preventDefault();
+            customerEmail.value = 1;
+            emailError.classList.remove('d-none');
+            emailError.textContent = 'Neplatný e-mail.';
+            return;
+        }
+
+        emailError.classList.add('d-none');
+    }
+    // Установити action на потрібний маршрут
+    formReport.action = '/save-send-report';
+    formReport.method = 'POST';
     formReport.submit();
 });

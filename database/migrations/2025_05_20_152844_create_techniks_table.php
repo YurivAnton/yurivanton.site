@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('techniks', function (Blueprint $table) {
             $table->id();
             $table->integer('worker_id');
+            $table->date('date');
             $table->time('startTime');
             $table->time('finishTime');
             $table->integer('report_id');

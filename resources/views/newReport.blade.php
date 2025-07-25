@@ -43,5 +43,5 @@
             </div>    
         </div>
     </div>
-    <script src="{{ asset('js/report.js?=5') }}"></script>
+    <script src="{{ asset('js/report.js?=4') }}"></script>
 </x-layout>

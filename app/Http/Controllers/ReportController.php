@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreReportRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\Customer;
 use App\Models\Worker;
 use App\Models\Report;
-use App\Models\DateTransport;
 use App\Models\Technik;
 use App\Models\SparePart;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Mail\ReportMail;
 
 class ReportController extends Controller
 {
@@ -32,101 +36,70 @@ class ReportController extends Controller
         ]);
     }
 
-    public function saveReport(Request $request)
+    public function saveReport(StoreReportRequest $request)
     {
-        $request->validate([
-            'reportNumber' => 'required|string',
-            'description' => 'nullable|string',
-            'date.*' => 'required|date',
-            'transportKm.*' => 'required|numeric',
-            // і т.д.
-        ]);
-
         DB::beginTransaction();
+        
         try {
-            $report = new Report;
-            
-            $report->reportNumber = $request->input('reportNumber');
-            $report->customer_id = $request->input('officeName');
-            $report->office_id = $request->input('officeName');
-            $report->description = $request->input('description');
-            $report->descriptionResult = $request->input('descriptionResult');
-            $report->typeDevice = $request->input('typeDevice');
-            $report->snDevice = $request->input('snDevice');
-            $report->coolant = $request->input('coolant');
-            $report->newCoolant = $request->input('newCoolant');
-            $report->oldCoolant = $request->input('oldCoolant');
-            $report->mainTech = $request->input('mainTech');
-            $report->signTech = $request->input('signTech');
-            $report->nameCustomerSign = $request->input('nameCustomerSign');
-            $report->signCustomer = $request->input('signCustomer');
-
-            if (!$report->save()) {
-                throw new \Exception('Не вдалося зберегти репорт.');
-            }
-            
-            foreach($request->input('date') as $key => $elem){
-                $dateTransport = new DateTransport;
-
-                $dateTransport->date = $request->input('date')[$key];
-                $dateTransport->transportKm = $request->input('transportKm')[$key];
-                $dateTransport->transportTime = $request->input('transportTime')[$key];
-                $dateTransport->report_id = $report->id;
-
-                if (!$dateTransport->save()) {
-                    throw new \Exception('Не вдалося зберегти репорт.');
-                }
-            }
-
-            /* for($i=0; $i < count($request->input('date')); $i++){
-                $dateTransport = new DateTransport;
-
-                $dateTransport->date = $request->input('date')[$i];
-                $dateTransport->transportKm = $request->input('transportKm')[$i];
-                $dateTransport->transportTime = $_POST['transportTime'][$i];
-                $dateTransport->report_id = $report->id;
-
-                if (!$dateTransport->save()) {
-                    throw new \Exception('Не вдалося зберегти репорт.');
-                }
-            } */
-
-            for($i=0; $i < count($_POST['technikName']); $i++){
-                $technik = new Technik;
-
-                $technik->worker_id = $_POST['technikName'][$i];
-                $technik->startTime = $_POST['startTime'][$i];
-                $technik->finishTime = $_POST['finishTime'][$i];
-                $technik->report_id = $report->id;
-
-                if (!$technik->save()) {
-                    throw new \Exception('Не вдалося зберегти репорт.');
-                }
-            }
-
-            for($i=0; $i < count($_POST['nameSparePart']); $i++){
-                $sparePart = new SparePart;
-
-                $sparePart->nameSparePart = $_POST['nameSparePart'][$i];
-                $sparePart->quantitySparePart = $_POST['quantitySparePart'][$i];
-                $sparePart->noteSparePart = $_POST['noteSparePart'][$i];
-                $sparePart->report_id = $report->id;
-
-                if (!$sparePart->save()) {
-                    throw new \Exception('Не вдалося зберегти репорт.');
-                }
-            }
+            $this->storeReportData($request);
 
             DB::commit();
 
-            return response()->json([
-                'success' => true, 'report_id' => $report->id]
-            );
+            return redirect()
+                ->route('report')
+                ->with('success', 'Report bol úspešne uložený.');
 
         } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Помилка при збереженні: ' . $e->getMessage()
             ], 500);
+        }
+    }
+
+    public function saveAndSend(StoreReportRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $report = $this->storeReportData($request);
+
+            // 🔧 Обчислення годин
+            $workedTime = [];
+            foreach ($request->startTime as $i => $start) {
+                $end = $request->finishTime[$i] ?? null;
+                if ($start && $end) {
+                    $workedTime[] = round((strtotime($end) - strtotime($start)) / 3600, 2);
+                } else {
+                    $workedTime[] = '---';
+                }
+            }
+
+            $sumWorkedTime = array_sum(array_filter($workedTime, 'is_numeric'));
+
+            DB::commit();
+
+            // 📄 Дані для PDF
+            $data = $request->all();
+            $data['workedTime'] = $workedTime;
+            $data['sumWorkedTime'] = $sumWorkedTime;
+
+            $pdf = Pdf::loadView('pdf.template', $data);
+            $pdfPath = storage_path('app/public/reports/report_' . $report->id . '.pdf');
+            Storage::disk('public')->put('reports/report_' . $report->id . '.pdf', $pdf->output());
+
+            $email = $request->input('customerEmail');
+
+            if(empty($email)){
+                $email = $request->input('sendEmail');
+            }
+            // ✉️ Надіслати PDF на e-mail
+            Mail::to($email) // заміни на потрібний e-mail
+                ->send(new ReportMail($pdfPath, $report->reportNumber));
+
+            return redirect()->route('report')->with('success', 'Report uložený a odoslaný e-mailom.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'Chyba pri ukladaní alebo odoslaní: ' . $e->getMessage()]);
         }
     }
 
@@ -138,5 +111,71 @@ class ReportController extends Controller
         }
 
         return $reportNumber = Carbon::now()->format('Ym') .'-1'; 
+    }
+
+    private function storeReportData(StoreReportRequest $request): Report
+    {
+        $signCustomerPath = null;
+
+        if ($request->filled('signCustomer')) {
+            $signCustomerBase64 = preg_replace('#^data:image/\w+;base64,#i', '', $request->signCustomer);
+            $signCustomerBinary = base64_decode($signCustomerBase64);
+            $signCustomerName = 'cust_' . $request->reportNumber . '.png';
+            $diskPath = 'signatures/' . $signCustomerName;
+            Storage::disk('public')->put($diskPath, $signCustomerBinary);
+            $signCustomerPath = 'storage/' . $diskPath;
+        }
+
+        $report = new Report();
+        $report->reportNumber = $request->reportNumber;
+        $report->customer_id = $request->customerId;
+        $report->office_id = $request->officeId;
+        $report->transportKm = $request->transportKm;
+        $report->transportTime = $request->transportTime;
+        $report->description = $request->description;
+        $report->descriptionResult = $request->descriptionResult;
+        $report->typeDevice = $request->typeDevice;
+        $report->snDevice = $request->snDevice;
+        $report->coolant = $request->coolant;
+        $report->newCoolant = $request->newCoolant;
+        $report->oldCoolant = $request->oldCoolant;
+        $report->oil = $request->oil;
+        $report->newOil = $request->newOil;
+        $report->oldOil = $request->oldOil;
+        $report->mainTech = $request->mainTech;
+        $report->signTech = $request->signTechPath;
+        $report->nameCustomerSign = $request->nameCustomerSign;
+        $report->signCustomer = $signCustomerPath;
+
+        $report->saveOrFail();
+
+        foreach($request->input('technikName') as $key => $elem){
+            $technik = new Technik;
+
+            $technik->worker_id = $request->input('technikId')[$key];
+            $technik->date = $request->input('date')[$key];
+            $technik->startTime = $request->input('startTime')[$key];
+            $technik->finishTime = $request->input('finishTime')[$key];
+            $technik->report_id = $report->id;
+
+            if (!$technik->save()) {
+                throw new \Exception('Не вдалося зберегти працівника.');
+            }
+        }
+
+        foreach($request->input('nameSparePart') as $key => $elem){
+            $sparePart = new SparePart;
+
+            $sparePart->nameSparePart = $request->input('nameSparePart')[$key];
+            $sparePart->quantitySparePart = $request->input('quantitySparePart')[$key];
+            $sparePart->noteSparePart = $request->input('noteSparePart')[$key];
+            $sparePart->report_id = $report->id;
+
+            if (!$sparePart->save()) {
+                throw new \Exception('Не вдалося зберегти зап частину.');
+            }
+        }
+
+        return $report;
     }
 }
