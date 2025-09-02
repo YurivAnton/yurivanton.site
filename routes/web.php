@@ -22,10 +22,12 @@ Route::get('/#contact', function () {
 // Route::get('/contact', [ContactController::class, 'contact'])->name('contact.contact');
 
 Route::get('/dashboard', [ReportController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::match(['get', 'post'], '/report', [ReportController::class, 'newReport'])->middleware(['auth', 'verified'])->name('report');
+Route::match(['get', 'post'], '/report', [ReportController::class, 'newReport'])->name('report');
 Route::post('/saveReport', [ReportController::class, 'saveReport'])->middleware(['auth', 'verified'])->name('saveReport');
 Route::post('/generate-pdf', [PdfController::class, 'generate']);
 Route::post('/save-send-report', [ReportController::class, 'saveAndSend'])->name('report.send');
+
+Route::match(['get', 'post'], '/report/try', [ReportController::class, 'newReportTry'])->name('report.try');
 
 
 Route::middleware('auth')->group(function () {

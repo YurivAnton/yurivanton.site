@@ -109,10 +109,31 @@ addTechnik.addEventListener('click', function (event) {
 });
 
 const addSpareParts = document.getElementById('addSpareParts');
+
 addSpareParts.addEventListener('click', function (event) {
     event.preventDefault();
-    const clone = document.getElementById('spareParts').cloneNode(true);
+
+    const original = document.getElementById('spareParts');
+    const clone = original.cloneNode(true);
+
+    // Очищаємо поля
     clone.querySelectorAll('input').forEach(input => input.value = '');
+
+    // Створюємо кнопку видалення
+    const deleteBtn = document.createElement('button');
+    deleteBtn.type = 'button';
+    deleteBtn.className = 'btn btn-danger btn-sm';
+    deleteBtn.textContent = '×';
+    deleteBtn.addEventListener('click', function () {
+        clone.remove();
+    });
+
+    // Знаходимо останню колонку і додаємо кнопку
+    const lastCol = clone.querySelector('.col-md-1');
+    lastCol.innerHTML = ''; // очищуємо (на випадок дублювання)
+    lastCol.appendChild(deleteBtn);
+
+    // Додаємо перед кнопкою "Додати"
     addSpareParts.insertAdjacentElement('beforeBegin', clone);
 });
 

@@ -20,8 +20,74 @@
             </div>
 
             <div class="row justify-content-center">
-                <!-- Тут будуть твої портфоліо-проєкти -->
-                <!-- Поки що закоментовані або можна буде вставити циклом -->
+                <div class="col-md-6 col-lg-6 mb-5">
+                    <div class="portfolio-item mx-auto">
+                        <img class="img-fluid rounded shadow" src="{{ asset('img/portfolio/reports-preview.png') }}" alt="Reports Project">
+                        <h4 class="mt-3">Reports Project</h4>
+                        <p class="text-muted">{{ __('projekts.reports.mainDesc') }}</p>
+
+                        <!-- Кнопки -->
+                        <div class="d-flex justify-content-center gap-2 mt-3">
+                            <button class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#reportsDetails" aria-expanded="false" aria-controls="reportsDetails">
+                                {{ __('projekts.reports.learnMore') }}
+                            </button>
+                            <a href="{{ route('report.try') }}" class="btn btn-primary">
+                                {{ __('projekts.reports.try') }}
+                            </a>
+                        </div>
+
+                        <!-- Секція, що розкривається -->
+                        <div class="collapse mt-3" id="reportsDetails">
+                            <div class="card card-body text-start bg-light">
+                                <div class="row">
+                                    <!-- Скріншот 1 -->
+                                    <div class="col-6 mb-3 text-center">
+                                        <img src="{{ asset('img/portfolio/reports-screenshot1.png') }}"
+                                            class="img-fluid rounded shadow-sm portfolio-screenshot"
+                                            alt="{{ __('projekts.reports.screenAlt_1') }}"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#screenshotModal1">
+                                        <p class="mt-2">{{ __('projekts.reports.screenText_1') }}</p>
+                                    </div>
+
+                                    <!-- Скріншот 2 -->
+                                    <div class="col-6 mb-3 text-center">
+                                        <img src="{{ asset('img/portfolio/reports-screenshot2.png') }}"
+                                            class="img-fluid rounded shadow-sm portfolio-screenshot"
+                                            alt="{{ __('projekts.reports.screenAlt_2') }}"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#screenshotModal2">
+                                        <p class="mt-2">{{ __('projekts.reports.screenText_2') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Модальне вікно для скріншота 1 -->
+                        <div class="modal fade" id="screenshotModal1" tabindex="-1" aria-labelledby="screenshotModal1Label" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-body text-center">
+                                        <img src="{{ asset('img/portfolio/reports-screenshot1.png') }}" class="img-fluid mb-3" alt="{{ __('projekts.reports.screenAlt_1') }}">
+                                        <p>{{ __('projekts.reports.screenDesc_1') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Модальне вікно для скріншота 2 -->
+                        <div class="modal fade" id="screenshotModal2" tabindex="-1" aria-labelledby="screenshotModal2Label" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-body text-center">
+                                        <img src="{{ asset('img/portfolio/reports-screenshot2.png') }}" class="img-fluid mb-3" alt="{{ __('projekts.reports.screenAlt_2') }}">
+                                        <p>{{ __('projekts.reports.screenDesc_2') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

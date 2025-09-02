@@ -226,21 +226,21 @@
     @endphp
 
     @foreach($sparePartNames as $i => $name)
-    <div id="spareParts" class="row g-2 mb-2">
+    <div id="spareParts" class="row g-2 mb-2 align-items-center">
         <div class="col-md-4">
             <input name="nameSparePart[]" type="text" class="form-control"
-                placeholder="{{ __('report.nameSparePart') }}"
-                value="{{ old('nameSparePart.' . $i) }}">
+                placeholder="{{ __('report.nameSparePart') }}">
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <input name="quantitySparePart[]" type="number" class="form-control"
-                placeholder="{{ __('report.quantitySparePart') }}"
-                value="{{ old('quantitySparePart.' . $i) }}">
+                placeholder="{{ __('report.quantitySparePart') }}">
         </div>
         <div class="col-md-4">
             <input name="noteSparePart[]" type="text" class="form-control"
-                placeholder="{{ __('report.noteSparePart') }}"
-                value="{{ old('noteSparePart.' . $i) }}">
+                placeholder="{{ __('report.noteSparePart') }}">
+        </div>
+        <div class="col-md-1 d-flex justify-content-end">
+            <!-- Тут кнопка з'явиться тільки у нових -->
         </div>
     </div>
     @endforeach

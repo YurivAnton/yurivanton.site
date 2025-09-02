@@ -77,11 +77,11 @@
     <table>
         <thead>
             <tr>
-                <th>{{ __('templatePDF.technicianName') }}</th>
-                <th>{{ __('templatePDF.date') }}</th>
-                <th>{{ __('templatePDF.startWork') }}</th>
-                <th>{{ __('templatePDF.endWork') }}</th>
-                <th>{{ __('templatePDF.hoursWorked') }}</th>
+                <th>{{ __('templatePDF.technicianName') ?? '---' }}</th>
+                <th>{{ __('templatePDF.date') ?? '---' }}</th>
+                <th>{{ __('templatePDF.startWork') ?? '---' }}</th>
+                <th>{{ __('templatePDF.endWork') ?? '---' }}</th>
+                <th>{{ __('templatePDF.hoursWorked') ?? '---' }}</th>
             </tr>
         </thead>
         <tbody>
@@ -99,7 +99,7 @@
             @endfor
             <tr>
                 <td colspan="4">{{ __('templatePDF.sum') }}</td>
-                <td>{{ $sumWorkedTime ?? '---' }}</td>
+                <td>{{ $sumWorkedTime ?? '' }}</td>
             </tr>
         </tbody>
     </table>

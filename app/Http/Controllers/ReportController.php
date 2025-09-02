@@ -36,6 +36,19 @@ class ReportController extends Controller
         ]);
     }
 
+    public function newReportTry()
+    {
+        $customers = Customer::with('offices')->get();
+        $workers = Worker::all();
+        $reportNumber = self::reportNumber();
+
+        return view('report.try', [
+            'customers' => $customers,
+            'workers' => $workers,
+            'reportNumber' => $reportNumber,
+        ]);
+    }
+
     public function saveReport(StoreReportRequest $request)
     {
         DB::beginTransaction();
@@ -92,7 +105,7 @@ class ReportController extends Controller
                 $email = $request->input('sendEmail');
             }
             // ✉️ Надіслати PDF на e-mail
-            Mail::to($email) // заміни на потрібний e-mail
+            Mail::to($email) 
                 ->send(new ReportMail($pdfPath, $report->reportNumber));
 
             return redirect()->route('report')->with('success', 'Report uložený a odoslaný e-mailom.');
