@@ -8,8 +8,6 @@
     <title>Yuriv Anton</title>
 </head>
 <body id="page-top">
-
-    <!-- Навігація -->
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand" href="/">{{ __('headNav.nameHead') }}</a>
@@ -92,19 +90,16 @@
         </div>
     </nav>
 
-    <!-- Контент сторінки -->
     <main>
         {{ $slot }}
     </main>
 
-    <!-- Підвал -->
     <footer class="copyright py-4 text-center text-white">
         <div class="container">
             <small>Copyright &copy; yurivanton.site 2025</small>
         </div>
     </footer>
 
-    <!-- Скрипти -->
     <script src="{{ asset('js/myJs.js') }}"></script>
 
 </body>
