@@ -43,4 +43,11 @@
         'show' => 'Zobraziť',
         'saveSent' => 'Uložiť a odoslať',
         'save' => 'Uložiť',
+        'sendEmail' => 'Zadajte e-mail:',
+        'errors' => [
+                        'signCustomerNOpen' => 'Prosím, podpíšte sa (kliknite na tlačidlo "Podpis").',
+                        'signCustomerNFill' => 'Podpis je prázdny. Prosím, podpíšte sa.',
+                        'emailEmpty' => 'Prosím, zadajte e-mail pre odoslanie protokolu.',
+                        'emailInvalid' => 'Neplatný e-mail.'
+                    ]
     ];

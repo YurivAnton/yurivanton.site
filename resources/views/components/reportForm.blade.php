@@ -270,7 +270,8 @@
     @enderror
     <input id="customerSign" name="nameCustomerSign" type="text" class="form-control mb-2" placeholder="{{ __('report.nameCustomerSign') }}">
     <button id="createCanvasCust" type="button" class="btn btn-outline-secondary btn-sm">{{ __('report.signature') }}</button>
-    <div id="signCustomerError" class="alert alert-danger d-none"></div>
+    <div id="signCustomerNOpen" class="alert alert-danger d-none">{{ __('report.errors.signCustomerNOpen') }}</div>
+    <div id="signCustomerNFill" class="alert alert-danger d-none">{{ __('report.errors.signCustomerNFill') }}</div>
     <canvas id="canvasCustomer" width="600" height="600" class="border rounded d-block mt-2 w-100 d-none"></canvas>
     <input type="hidden" name="signCustomer" id="signCustomer">
     <div class="mt-2">
@@ -280,9 +281,10 @@
 </fieldset>
 
 <div id="emailContainer" class="mt-3 d-none">
-    <label for="sendEmail" class="form-label">Zadajte e-mail:</label>
+    <label for="sendEmail" class="form-label">{{ __('report.sendEmail') }}</label>
     <input type="email" name="sendEmail" id="sendEmail" class="form-control" placeholder="example@domain.com">
-    <div id="emailError" class="text-danger mt-1 d-none">Zadajte správny e-mail.</div>
+    <div id="emailEmpty" class="text-danger mt-1 d-none">{{ __('report.errors.emailEmpty') }}</div>
+    <div id="emailInvalid" class="text-danger mt-1 d-none">{{ __('report.errors.emailInvalid') }}</div>
 </div>
 
 <fieldset>

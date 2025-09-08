@@ -105,10 +105,10 @@ Pole :attribute musí obsahovať :size položiek.',
     ],
 
     'attributes' => [
-        'customerName'       => 'meno zákazníka',
+        'customerId'       => 'meno zákazníka',
         'date.*'             => 'dátum',
-        'transportKm'      => 'kilometre dopravy',
-        'transportTime'    => 'čas dopravy',
+        'transportKm'        => 'kilometre dopravy',
+        'transportTime'      => 'čas dopravy',
         'technikName.*'      => 'meno technika',
         'startTime.*'        => 'začiatok práce',
         'finishTime.*'       => 'koniec práce',

@@ -33,6 +33,6 @@
 
     <!-- Скрипти -->
     <script src="{{ asset('js/myJs.js') }}"></script>
-    <script src="{{ asset('js/report.js?=3') }}"></script>
+    <script src="{{ asset('js/report.js?=4') }}"></script>
 </body>
 </html>

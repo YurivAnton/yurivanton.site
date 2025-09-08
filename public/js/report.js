@@ -316,49 +316,55 @@ saveSent.addEventListener('click', function(event){
     event.preventDefault();
 
     const canvasCustomer = document.getElementById('canvasCustomer');
-    const errorDiv = document.getElementById('signCustomerError');
+    const errorDivNOpen = document.getElementById('signCustomerNOpen');
+    const errorDivNFill = document.getElementById('signCustomerNFill');
     const emailField = document.getElementById('sendEmail');
     const emailContainer = document.getElementById('emailContainer');
-    const emailError = document.getElementById('emailError');
+    const emailEmpty = document.getElementById('emailEmpty');
+    const emailInvalid = document.getElementById('emailInvalid');
 
     const canvasWasOpened = !canvasCustomer.classList.contains('d-none');
 
     if (!canvasWasOpened) {
-        errorDiv.textContent = 'Prosím, podpíšte sa (kliknite na tlačidlo "Podpis").';
-        errorDiv.classList.remove('d-none');
+        errorDivNOpen.classList.remove('d-none');
+        errorDivNFill.classList.add('d-none');
         return;
     }
 
     if (isCanvasBlank(canvasCustomer)) {
-        errorDiv.textContent = 'Podpis je prázdny. Prosím, podpíšte sa.';
-        errorDiv.classList.remove('d-none');
+        errorDivNFill.classList.remove('d-none');
+        errorDivNOpen.classList.add('d-none');
         return;
     }
 
-    errorDiv.classList.add('d-none');
+    errorDivNOpen.classList.add('d-none');
+    errorDivNFill.classList.add('d-none');
     document.getElementById('signCustomer').value = canvasCustomer.toDataURL("image/png");
 
     if(!customerEmail.value){
         if(!emailField || emailField.value.trim() === ''){
             event.preventDefault();
             emailContainer.classList.remove('d-none');
-            emailError.classList.remove('d-none');
-            emailError.textContent = 'Prosím, zadajte e-mail pre odoslanie protokolu.';
+            emailEmpty.classList.remove('d-none');
+            emailInvalid.classList.add('d-none');
+            // emailError.textContent = 'Prosím, zadajte e-mail pre odoslanie protokolu.';
             return;
         }
 
         const email = emailField.value.trim();
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
         if (!emailRegex.test(email)) {
             event.preventDefault();
             customerEmail.value = 1;
-            emailError.classList.remove('d-none');
-            emailError.textContent = 'Neplatný e-mail.';
+            emailInvalid.classList.remove('d-none');
+            emailEmpty.classList.add('d-none');
+            // emailError.textContent = 'Neplatný e-mail.';
             return;
         }
 
-        emailError.classList.add('d-none');
+        emailEmpty.classList.add('d-none');
+        emailInvalid.classList.add('d-none');
     }
     // Установити action на потрібний маршрут
     formReport.action = '/save-send-report';

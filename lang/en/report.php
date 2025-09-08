@@ -43,4 +43,11 @@
         'show' => 'Show',
         'saveSent' => 'Save and Sent',
         'save' => 'Save',
+        'sendEmail' => 'Enter your email:',
+        'errors' => [
+                        'signCustomerNOpen' => 'Please sign (click the "Signature" button).',
+                        'signCustomerNFill' => 'The signature is empty. Please sign.',
+                        'emailEmpty' => 'Please enter an email address to send the report.',
+                        'emailInvalid' => 'Invalid email.'
+                    ]
     ];
