@@ -59,6 +59,16 @@
                                             data-bs-target="#screenshotModal2">
                                         <p class="mt-2">{{ __('projekts.reports.screenText_2') }}</p>
                                     </div>
+
+                                    <!-- Скріншот 2 -->
+                                    <div class="col-6 mb-3 text-center">
+                                        <img src="{{ asset('img/portfolio/reports-screenshot3.png') }}"
+                                            class="img-fluid rounded shadow-sm portfolio-screenshot"
+                                            alt="{{ __('projekts.reports.screenAlt_3') }}"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#screenshotModal3">
+                                        <p class="mt-2">{{ __('projekts.reports.screenText_3') }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -82,6 +92,18 @@
                                     <div class="modal-body text-center">
                                         <img src="{{ asset('img/portfolio/reports-screenshot2.png') }}" class="img-fluid mb-3" alt="{{ __('projekts.reports.screenAlt_2') }}">
                                         <p>{{ __('projekts.reports.screenDesc_2') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Модальне вікно для скріншота 2 -->
+                        <div class="modal fade" id="screenshotModal3" tabindex="-1" aria-labelledby="screenshotModal3Label" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-body text-center">
+                                        <img src="{{ asset('img/portfolio/reports-screenshot3.png') }}" class="img-fluid mb-3" alt="{{ __('projekts.reports.screenAlt_3') }}">
+                                        <p>{{ __('projekts.reports.screenDesc_3') }}</p>
                                     </div>
                                 </div>
                             </div>
