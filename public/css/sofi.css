@@ -1,0 +1,168 @@
+.trainer-page {
+    text-align: center;
+    padding-top: 40px;
+    font-family: "Comic Sans MS", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #ffe6f2, #fff7ff);
+    min-height: 100vh;
+}
+
+/* Заголовок */
+.trainer-page .title {
+    font-size: 40px;
+    color: #d14b8f;
+    text-shadow: 2px 2px #fff;
+    margin-bottom: 30px;
+}
+
+/* Карточка */
+.trainer-page .trainer-card {
+    display: inline-block;
+    background: #ffffffb7;
+    padding: 25px 40px;
+    border-radius: 30px;
+    box-shadow: 0 6px 20px rgba(255, 100, 150, 0.3);
+    border: 3px solid #ffb3d9;
+}
+
+/* Блок із прикладом */
+.trainer-page .trainer {
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Інпути */
+.trainer-page input {
+    width: 60px;
+    font-size: 28px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px;
+    border: 3px solid #ffaad4;
+    background: #fff0f6;
+    outline: none;
+    transition: 0.2s;
+}
+
+.trainer-page input:focus {
+    border-color: #ff63b1;
+    background-color: #ffe4f3;
+}
+
+/* Кнопка */
+.trainer-page .btn {
+    margin-top: 20px;
+    padding: 12px 30px;
+    font-size: 22px;
+    background: #ff7fc9;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(255, 80, 150, 0.4);
+    transition: 0.2s;
+}
+
+.trainer-page .btn:hover {
+    background: #ff5eb4;
+    transform: scale(1.05);
+}
+
+.trainer-page .btn:active {
+    transform: scale(0.97);
+}
+
+/* Підсвічування td */
+.trainer-page td.correct {
+    background-color: #b7ffb7 !important;
+    border-radius: 10px;
+}
+
+.trainer-page td.wrong {
+    background-color: #ffb7b7 !important;
+    border-radius: 10px;
+}
+
+/* ------------------------- */
+/* 📱 Мобільна адаптація     */
+/* ------------------------- */
+
+@media (max-width: 600px) {
+    .trainer-page {
+        padding-top: 20px;
+    }
+
+    .trainer-page .title {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .trainer-page .trainer-card {
+        width: 90%;
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .trainer-page .trainer {
+        font-size: 24px;
+        gap: 6px;
+    }
+
+    .trainer-page input {
+        width: 50px;
+        font-size: 22px;
+        padding: 8px;
+    }
+
+    .trainer-page .btn {
+        width: 100%;
+        font-size: 20px;
+        padding: 12px 0;
+    }
+}
+
+.trainer-page .task-table {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 24px;
+    background-color: #fff0f6;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(255, 100, 150, 0.3);
+    overflow: hidden;
+}
+
+.trainer-page .task-table td {
+    padding: 15px;
+    border: 2px solid #ffaad4;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    border-radius: 10px;
+}
+
+.trainer-page .task-table td:hover {
+    background-color: #ffe4f3;
+    transform: scale(1.05);
+}
+
+.trainer-page .task-table td.correct {
+    background-color: #b7ffb7 !important;
+    font-weight: bold;
+}
+
+.trainer-page .task-table td.wrong {
+    background-color: #ffb7b7 !important;
+    font-weight: bold;
+}
+
+/* Адаптація для мобільних пристроїв */
+@media (max-width: 600px) {
+    .trainer-page .task-table td {
+        padding: 10px;
+        font-size: 18px;
+    }
+}

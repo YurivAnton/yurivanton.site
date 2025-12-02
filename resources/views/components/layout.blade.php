@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <x-head.meta />
     <x-head.links />
+    @stack('styles')
     <title>Yuriv Anton</title>
 </head>
 <body id="page-top">

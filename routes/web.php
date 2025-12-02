@@ -5,6 +5,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\SofiController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('change/{language}', [LanguageController::class, 'change'])->name('lang.change');
@@ -28,7 +29,7 @@ Route::post('/generate-pdf', [PdfController::class, 'generate']);
 Route::post('/save-send-report', [ReportController::class, 'saveAndSend'])->name('report.send');
 
 Route::match(['get', 'post'], '/report/try', [ReportController::class, 'newReportTry'])->name('report.try');
-
+Route::get('/sofi', [SofiController::class, 'nasob'])->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
