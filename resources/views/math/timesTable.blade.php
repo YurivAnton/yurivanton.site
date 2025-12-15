@@ -1,6 +1,6 @@
 <x-layout>
     @push('styles')
-        <link rel="stylesheet" href="{{ asset('css/timesTable.css?=3') }}">
+        <link rel="stylesheet" href="{{ asset('css/timesTable.css?=1') }}">
     @endpush
 
     <div class="trainer-wrapper">

@@ -159,24 +159,44 @@
 
     .sidebar {
         width: 100%;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
         border-right: none;
-        border-bottom: 4px solid #ffb3d9;
-    }
-
-    .menu {
-        display: flex;
-        gap: 10px;
-    }
-
-    .menu li {
-        margin-bottom: 0;
-        font-size: 14px;
+        border-bottom: 4px solid #ff8fc7;
+        box-shadow: none;
     }
 
     .content {
-        padding: 20px 10px;
+        padding: 15px 10px;
+    }
+
+    .trainer-page {
+        max-width: 100%;
+    }
+
+    .task-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .task-table tbody {
+        display: inline-block;
+    }
+
+    .task-table td {
+        font-size: 14px;
+        padding: 6px;
+        min-width: 45px;
+    }
+
+    .trainer-card {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .trainer input {
+        width: 45px;
+        font-size: 20px;
     }
 }
