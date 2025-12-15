@@ -2,6 +2,7 @@
 return [
     'nameHead' => 'Yuriv Anton',
     'dashboard' => 'Palubná doska',
+    'math' => 'Matematika',
     'report' => 'Servisný záznam',
     'logOut' => 'Odhlásiť sa',
     'menu' => 'Menu',

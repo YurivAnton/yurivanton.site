@@ -11,7 +11,7 @@
 <body id="page-top">
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand" href="/">{{ __('headNav.nameHead') }}</a>
+            <a class="navbar-brand" href="/">{{ auth()->check() ? auth()->user()->name : __('headNav.nameHead') }}</a>
 
             <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded"
                 type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
@@ -27,6 +27,11 @@
                             <li class="nav-item mx-0 mx-lg-1">
                                 <a href="{{ url('/dashboard') }}" class="nav-link py-3 px-0 px-lg-3 rounded">
                                 {{ __('headNav.dashboard') }}
+                                </a>
+                            </li>
+                            <li class="nav-item mx-0 mx-lg-1">
+                                <a href="{{ url('/math') }}" class="nav-link py-3 px-0 px-lg-3 rounded">
+                                {{ __('headNav.math') }}
                                 </a>
                             </li>
                             <li class="nav-item mx-0 mx-lg-1">

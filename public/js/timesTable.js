@@ -1,9 +1,9 @@
-// Збираємо всі td із таблиці
 const tdList = [...document.querySelectorAll('#tasks td')];
 let used = new Set();
+let currentIndex = null;
 let currentTd = null;
 
-// Функція вибору нового завдання
+// Завантажити нове завдання
 function loadNewTask() {
     if (used.size === tdList.length) {
         alert("Усі завдання виконано!");
@@ -15,48 +15,47 @@ function loadNewTask() {
         index = Math.floor(Math.random() * tdList.length);
     } while (used.has(index));
 
-    used.add(index);
+    currentIndex = index;
     currentTd = tdList[index];
 
-    const example = currentTd.innerText.split("*");
-    document.getElementById("a").value = example[0];
-    document.getElementById("b").value = example[1];
+    const [a, b] = currentTd.innerText.split("*");
 
-    // Очищаємо поле відповіді і ставимо фокус
+    document.getElementById("a").value = a;
+    document.getElementById("b").value = b;
+
     const answerInput = document.getElementById("answer");
     answerInput.value = "";
     answerInput.focus();
 }
 
-// Натискання кнопки "Перевірити"
+// Перевірка відповіді
 document.getElementById("check").addEventListener("click", () => {
-    if (!currentTd) return;
+    if (currentTd === null) return;
 
     const a = parseInt(document.getElementById("a").value);
     const b = parseInt(document.getElementById("b").value);
     const userAnswer = parseInt(document.getElementById("answer").value);
     const correctAnswer = a * b;
 
-    // Знімаємо попередні класи
     currentTd.classList.remove("correct", "wrong");
 
-    // Додаємо правильний або неправильний клас
     if (userAnswer === correctAnswer) {
         currentTd.classList.add("correct");
     } else {
         currentTd.classList.add("wrong");
     }
 
-    // Після короткої паузи завантажуємо нове завдання
-    setTimeout(loadNewTask, 500);
+    used.add(currentIndex);
+
+    setTimeout(loadNewTask, 400);
 });
 
-// Автофокус через Enter
+// Enter = перевірити
 document.getElementById("answer").addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         document.getElementById("check").click();
     }
 });
 
-// Старт тренажера
+// Старт
 loadNewTask();

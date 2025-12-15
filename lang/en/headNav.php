@@ -2,6 +2,7 @@
 return [
     'nameHead' => 'Yuriv Anton',
     'dashboard' => 'Dashboard',
+    'math' => 'Mathematics',
     'report' => 'Report',
     'logOut' => 'Log Out',
     'menu' => 'Menu',
