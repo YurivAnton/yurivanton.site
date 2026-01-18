@@ -107,6 +107,21 @@
     background: #ffb7b7;
 }
 
+.message {
+    display: none;
+    margin-top: 15px;
+    padding: 15px;
+    background: #ffe0e0;
+    color: #b30000;
+    border-radius: 15px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.message .btn {
+    margin-top: 10px;
+}
+
 /* Карточка */
 .trainer-card {
     background: #ffffffb7;

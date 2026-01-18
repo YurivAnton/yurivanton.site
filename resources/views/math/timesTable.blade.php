@@ -1,6 +1,6 @@
 <x-layout>
     @push('styles')
-        <link rel="stylesheet" href="{{ asset('css/timesTable.css?=1') }}">
+        <link rel="stylesheet" href="{{ asset('css/timesTable.css?=2') }}">
     @endpush
 
     <div class="trainer-wrapper">
@@ -41,6 +41,11 @@
                     @endfor
                 </table>
 
+                <div class="message" id="message">
+                    <span class="message-text"></span>
+                    <button class="btn message-ok">OK</button>
+                </div>
+
                 <div class="trainer-card">
                     <div class="trainer">
                         <input id="a" readonly>
@@ -57,6 +62,6 @@
         </main>
     </div>
 
-    <script src="{{ asset('js/timesTable.js?=3') }}"></script>
-    <script src="{{ asset('js/math.js?=3') }}"></script>
+    <script src="{{ asset('js/timesTable.js?=4') }}"></script>
+    <script src="{{ asset('js/math.js?=1') }}"></script>
 </x-layout>

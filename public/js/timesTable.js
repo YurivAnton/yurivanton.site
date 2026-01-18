@@ -3,7 +3,15 @@ let used = new Set();
 let currentIndex = null;
 let currentTd = null;
 
-// Завантажити нове завдання
+const message = document.getElementById("message");
+const messageText = message.querySelector(".message-text");
+const okButton = message.querySelector(".message-ok");
+const answerInput = document.getElementById("answer");
+const checkButton = document.getElementById("check");
+
+// --------------------
+// Завантажити завдання
+// --------------------
 function loadNewTask() {
     if (used.size === tdList.length) {
         alert("Усі завдання виконано!");
@@ -23,38 +31,67 @@ function loadNewTask() {
     document.getElementById("a").value = a;
     document.getElementById("b").value = b;
 
-    const answerInput = document.getElementById("answer");
     answerInput.value = "";
     answerInput.focus();
 }
 
+// --------------------
 // Перевірка відповіді
-document.getElementById("check").addEventListener("click", () => {
-    if (currentTd === null) return;
+// --------------------
+function checkAnswer() {
+    if (!currentTd) return;
 
     const a = parseInt(document.getElementById("a").value);
     const b = parseInt(document.getElementById("b").value);
-    const userAnswer = parseInt(document.getElementById("answer").value);
+    const userAnswer = parseInt(answerInput.value);
     const correctAnswer = a * b;
 
     currentTd.classList.remove("correct", "wrong");
 
+    // Правильно
     if (userAnswer === correctAnswer) {
         currentTd.classList.add("correct");
-    } else {
-        currentTd.classList.add("wrong");
+        message.style.display = "none";
+
+        used.add(currentIndex);
+        setTimeout(loadNewTask, 400);
+        return;
     }
 
-    used.add(currentIndex);
+    // Неправильно
+    currentTd.classList.add("wrong");
+    messageText.innerText = `${a} × ${b} = ${correctAnswer}`;
+    message.style.display = "block";
+}
 
-    setTimeout(loadNewTask, 400);
+// --------------------
+// Кнопка "Перевірити"
+// --------------------
+checkButton.addEventListener("click", checkAnswer);
+
+// --------------------
+// Кнопка OK
+// --------------------
+okButton.addEventListener("click", () => {
+    checkAnswer(); // ⭐ ПОВТОРНА ПЕРЕВІРКА
 });
 
-// Enter = перевірити
-document.getElementById("answer").addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-        document.getElementById("check").click();
+// --------------------
+// Enter в інпуті
+// --------------------
+answerInput.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter") return;
+
+    e.preventDefault();
+
+    // якщо повідомлення показане — Enter = OK
+    if (message.style.display === "block") {
+        checkAnswer();
+        return;
     }
+
+    // інакше — звичайна перевірка
+    checkAnswer();
 });
 
 // Старт
