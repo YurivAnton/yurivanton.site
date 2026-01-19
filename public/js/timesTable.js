@@ -70,13 +70,6 @@ function checkAnswer() {
 checkButton.addEventListener("click", checkAnswer);
 
 // --------------------
-// Кнопка OK
-// --------------------
-okButton.addEventListener("click", () => {
-    checkAnswer(); // ⭐ ПОВТОРНА ПЕРЕВІРКА
-});
-
-// --------------------
 // Enter в інпуті
 // --------------------
 answerInput.addEventListener("keydown", (e) => {

@@ -1,6 +1,6 @@
 <x-layout>
     @push('styles')
-        <link rel="stylesheet" href="{{ asset('css/timesTable.css?=2') }}">
+        <link rel="stylesheet" href="{{ asset('css/timesTable.css?=4') }}">
     @endpush
 
     <div class="trainer-wrapper">
@@ -9,7 +9,7 @@
         <aside class="sidebar">
             <div class="sidebar-user">
                 @auth
-                    <div class="avatar">👧</div>
+                    <div class="avatar"><img src="{{ asset('img/ava_Sofi.jpg') }}"></div>
                     <div class="username">
                         Привіт,<br>
                         <strong>{{ auth()->user()->name }}</strong>
@@ -43,7 +43,6 @@
 
                 <div class="message" id="message">
                     <span class="message-text"></span>
-                    <button class="btn message-ok">OK</button>
                 </div>
 
                 <div class="trainer-card">
@@ -62,6 +61,6 @@
         </main>
     </div>
 
-    <script src="{{ asset('js/timesTable.js?=4') }}"></script>
+    <script src="{{ asset('js/timesTable.js?=1') }}"></script>
     <script src="{{ asset('js/math.js?=1') }}"></script>
 </x-layout>
