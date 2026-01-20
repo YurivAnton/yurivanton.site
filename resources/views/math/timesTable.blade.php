@@ -51,7 +51,7 @@
                         <span>*</span>
                         <input id="b" readonly>
                         <span>=</span>
-                        <input id="answer">
+                        <input id="answer" type="text" inputmode="numeric" autocomplete="off">
                     </div>
 
                     <button id="check" class="btn">Перевірити ✔</button>
@@ -61,6 +61,6 @@
         </main>
     </div>
 
-    <script src="{{ asset('js/timesTable.js?=1') }}"></script>
+    <script src="{{ asset('js/timesTable.js?=2') }}"></script>
     <script src="{{ asset('js/math.js?=1') }}"></script>
 </x-layout>

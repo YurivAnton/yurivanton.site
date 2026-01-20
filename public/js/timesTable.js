@@ -87,5 +87,9 @@ answerInput.addEventListener("keydown", (e) => {
     checkAnswer();
 });
 
+answerInput.addEventListener("input", () => {
+    answerInput.value = answerInput.value.replace(/\D/g, "");
+});
+
 // Старт
 loadNewTask();
