@@ -1,20 +1,41 @@
-const tdList = [...document.querySelectorAll('#tasks td')];
+// ===== ЕЛЕМЕНТИ =====
+const tdList = [...document.querySelectorAll("#tasks td")];
+const answerInput = document.getElementById("answer");
+const checkButton = document.getElementById("check");
+
+const message = document.getElementById("message");
+const messageText = message.querySelector(".message-text");
+
+// ===== СТАН =====
 let used = new Set();
 let currentIndex = null;
 let currentTd = null;
 
-const message = document.getElementById("message");
-const messageText = message.querySelector(".message-text");
-const okButton = message.querySelector(".message-ok");
-const answerInput = document.getElementById("answer");
-const checkButton = document.getElementById("check");
+let startTime = null;
+let messageType = null;       // "error" | "finish"
+let mistakes = 0;
+let isFixingError = false;    // режим виправлення помилки
 
-// --------------------
-// Завантажити завдання
-// --------------------
+// ===== ТІЛЬКИ ЦИФРИ =====
+answerInput.addEventListener("input", () => {
+    answerInput.value = answerInput.value.replace(/\D/g, "");
+});
+
+// ===== ЗАВАНТАЖИТИ НОВЕ ЗАВДАННЯ =====
 function loadNewTask() {
     if (used.size === tdList.length) {
-        alert("Усі завдання виконано!");
+        const endTime = Date.now();
+        const diff = Math.floor((endTime - startTime) / 1000);
+
+        const min = String(Math.floor(diff / 60)).padStart(2, "0");
+        const sec = String(diff % 60).padStart(2, "0");
+
+        messageType = "finish";
+        messageText.innerText =
+            `Ти впоралась за ${min}:${sec}!\n` +
+            `Помилок: ${mistakes}`;
+
+        message.style.display = "block";
         return;
     }
 
@@ -35,61 +56,87 @@ function loadNewTask() {
     answerInput.focus();
 }
 
-// --------------------
-// Перевірка відповіді
-// --------------------
+// ===== ПЕРЕВІРКА =====
 function checkAnswer() {
+    if (startTime === null) {
+        startTime = Date.now();
+    }
+
     if (!currentTd) return;
 
-    const a = parseInt(document.getElementById("a").value);
-    const b = parseInt(document.getElementById("b").value);
-    const userAnswer = parseInt(answerInput.value);
-    const correctAnswer = a * b;
+    const a = +document.getElementById("a").value;
+    const b = +document.getElementById("b").value;
+    const userAnswer = +answerInput.value;
+    const correct = a * b;
 
     currentTd.classList.remove("correct", "wrong");
 
-    // Правильно
-    if (userAnswer === correctAnswer) {
-        currentTd.classList.add("correct");
-        message.style.display = "none";
+    // ПОМИЛКА (ТІЛЬКИ ПЕРШИЙ РАЗ)
+    if (userAnswer !== correct) {
 
-        used.add(currentIndex);
-        setTimeout(loadNewTask, 400);
+        if (!isFixingError) {
+            mistakes++;
+            isFixingError = true;
+        }
+
+        currentTd.classList.add("wrong");
+
+        messageType = "error";
+        messageText.innerText = `${a} × ${b} = ${correct}`;
+        message.style.display = "block";
+
+        answerInput.value = "";
+        answerInput.focus();
         return;
     }
 
-    // Неправильно
-    currentTd.classList.add("wrong");
-    messageText.innerText = `${a} × ${b} = ${correctAnswer}`;
-    message.style.display = "block";
+    // ПРАВИЛЬНО
+    currentTd.classList.add("correct");
+    used.add(currentIndex);
+
+    message.style.display = "none";
+    messageType = null;
+
+    isFixingError = false;
+
+    setTimeout(loadNewTask, 300);
 }
 
-// --------------------
-// Кнопка "Перевірити"
-// --------------------
+// ===== КНОПКА =====
 checkButton.addEventListener("click", checkAnswer);
 
-// --------------------
-// Enter в інпуті
-// --------------------
+// ===== ENTER (ТІЛЬКИ В ІНПУТІ) =====
 answerInput.addEventListener("keydown", (e) => {
     if (e.key !== "Enter") return;
 
     e.preventDefault();
 
-    // якщо повідомлення показане — Enter = OK
-    if (message.style.display === "block") {
-        checkAnswer();
+    if (message.style.display === "block" && messageType === "finish") {
+        resetGame();
         return;
     }
 
-    // інакше — звичайна перевірка
     checkAnswer();
 });
 
-answerInput.addEventListener("input", () => {
-    answerInput.value = answerInput.value.replace(/\D/g, "");
-});
+// ===== СКИДАННЯ ГРИ =====
+function resetGame() {
+    used.clear();
+    mistakes = 0;
+    startTime = null;
+    currentTd = null;
+    currentIndex = null;
+    isFixingError = false;
 
-// Старт
+    tdList.forEach(td => {
+        td.classList.remove("correct", "wrong");
+    });
+
+    message.style.display = "none";
+    messageType = null;
+
+    loadNewTask();
+}
+
+// ===== СТАРТ =====
 loadNewTask();
