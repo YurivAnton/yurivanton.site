@@ -61,6 +61,6 @@
         </main>
     </div>
 
-    <script src="{{ asset('js/timesTable.js?=2') }}"></script>
+    <script src="{{ asset('js/timesTable.js?=5') }}"></script>
     <script src="{{ asset('js/math.js?=1') }}"></script>
 </x-layout>
