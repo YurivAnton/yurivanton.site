@@ -6,6 +6,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\MathController;
+use App\Http\Controllers\TrainingStatController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('change/{language}', [LanguageController::class, 'change'])->name('lang.change');
@@ -36,5 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::post('/training-result', [TrainingStatController::class, 'store']);
 
 require __DIR__.'/auth.php';
