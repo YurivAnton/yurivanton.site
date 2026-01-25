@@ -21,21 +21,58 @@ answerInput.addEventListener("input", () => {
     answerInput.value = answerInput.value.replace(/\D/g, "");
 });
 
+function finishGame() {
+    const endTime = Date.now();
+    const diff = Math.floor((endTime - startTime) / 1000);
+
+    const min = String(Math.floor(diff / 60)).padStart(2, "0");
+    const sec = String(diff % 60).padStart(2, "0");
+
+    messageText.innerText =
+        `🎉 Ти впоралась за ${min}:${sec}\n` +
+        `💔 Помилок: ${mistakes}`;
+
+    message.style.display = "block";
+
+    messageType = "finish"
+
+    // 🔥 НАДСИЛАЄМО В БД
+    sendResultToServer(diff, mistakes, tdList.length);
+}
+
+function sendResultToServer(timeSeconds, mistakes, totalTasks) {
+    fetch("/training-result", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-CSRF-TOKEN": document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content"),
+        },
+        credentials: "same-origin",
+        body: JSON.stringify({
+            time_seconds: timeSeconds,
+            mistakes: mistakes,
+            tasks_total: totalTasks,
+        }),
+    })
+        .then((res) => {
+            if (!res.ok) throw new Error("Auth error");
+            return res.json();
+        })
+        .then((data) => {
+            console.log("✅ Результат збережено", data);
+        })
+        .catch((err) => {
+            console.error("❌ Помилка збереження", err);
+        });
+}
+
 // ===== ЗАВАНТАЖИТИ НОВЕ ЗАВДАННЯ =====
 function loadNewTask() {
     if (used.size === tdList.length) {
-        const endTime = Date.now();
-        const diff = Math.floor((endTime - startTime) / 1000);
-
-        const min = String(Math.floor(diff / 60)).padStart(2, "0");
-        const sec = String(diff % 60).padStart(2, "0");
-
-        messageType = "finish";
-        messageText.innerText =
-            `Ти впоралась за ${min}:${sec}!\n` +
-            `Помилок: ${mistakes}`;
-
-        message.style.display = "block";
+        finishGame();
         return;
     }
 
